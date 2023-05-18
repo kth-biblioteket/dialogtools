@@ -1,0 +1,1778 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600);
+
+
+:root {
+  --toppositionhearts: 10px;
+  --leftpositionhearts: 10px;
+}
+
+*,:after,:before {
+  box-sizing: border-box
+}
+
+#lang {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 24px;
+    padding: 10px;
+}
+
+#lang span {
+  color: #fff;
+}
+
+.categoryLabel {
+	cursor: pointer;
+	position: absolute;
+	padding: 15px 40px;
+	text-align: center;
+	border-radius: 7px;
+  background-color: rgba(4, 70, 78, 0.85);  /* base darkest blue */
+  /*KTH*/
+  background-color: #fff !important;
+  border-color: #fff;
+  color: #1954A6;
+  border-radius: .25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  padding: .5rem 1.5rem;
+  line-height: normal;
+}
+
+.circle-text {
+  width: 360px;
+  height: 300px;
+  display: block;
+  border-radius: 50%;
+  text-align: center;
+  min-width: 50px;
+  min-height: 50px;
+}
+
+.center-align {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+
+/* General Style */
+body {
+  background: #1954A6;
+  color:#fff;
+  font-family: "Open Sans",Arial,"Helvetica Neue",helvetica,sans-serif;
+  margin: 0px;
+  user-select: none !important;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+}
+
+
+@font-face {
+  font-family: 'GillSansLight';
+  src: url('fonts/Gill_Sans_Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'GillSansBold';
+  src: url('fonts/Gill_Sans_Bold.woff') format('woff');
+}
+
+/* Webfonts: Copyright © Letters From Sweden. All rights reserved. To obtain a license, please see: https://lettersfromsweden.se */
+
+@font-face {
+  font-family: 'EksellDisplayWebMedium';
+  src: url('fonts/EksellDisplayWeb-Medium.woff') format('woff');
+}
+
+a {
+  text-decoration: none;
+}
+
+.wrap {
+  width: 270px;
+  height: 475px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #888888;
+}
+
+#wrapper {
+  display: flex;
+  flex-flow: column;
+  height: 90%;
+  padding: 0px 40px 40px 40px
+}
+
+.frame {
+  width: 1080px;
+  height: 1920px;
+  border: 0;
+  -ms-transform: scale(0.25);
+  -moz-transform: scale(0.25);
+  -o-transform: scale(0.25);
+  -webkit-transform: scale(0.25);
+  transform: scale(0.25);
+
+  -ms-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+.header {
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+#content {
+  z-index: 1;
+  padding: 10px;
+  display: flex;
+}
+
+h2 {
+  padding: 0;
+  margin: 0;
+}
+
+textarea {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	width: 100%;
+}
+
+.title {
+  font-size: 3vw;
+  line-height: 1;
+  color: #e9efe7; /* white */
+  /*font-family1: 'EksellDisplayWebMedium';*/
+  font-family: "Open Sans",Arial,"Helvetica Neue",helvetica,sans-serif;
+}
+
+#subcaption {
+  font-size: 2vw;
+  line-height: 1;
+  color: #e9efe7; /* white */
+  /*font-family1: 'EksellDisplayWebMedium';*/
+  font-family: "Open Sans",Arial,"Helvetica Neue",helvetica,sans-serif;
+  width: 50%;
+}
+
+.subtitle {
+  font-size: 40px;
+  color: #000 !important;
+  /*font-family1: 'EksellDisplayWebMedium' !important;*/
+  font-family: "Open Sans",Arial,"Helvetica Neue",helvetica,sans-serif;
+}
+
+.instruction {
+  /*font-family1: 'GillSansLight';*/
+  color: #bdcc9b; /* light green */
+  font-size: 2vw;
+  line-height: 1.2;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.body {
+  /*font-family1: 'GillSansLight';/*
+  color: #bec4ba; /* light gray */
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.bodyBold {
+  /*font-family1: 'GillSansBold' !important;*/
+  color: #bdcc9b; /* light green */
+}
+
+.shadow {
+  /*box-shadow: 0px 0px 2px #373735;*/
+  box-shadow: 0 1.5rem 1rem rgba(0,0,0,0.35)!important;
+}
+
+.clickable {
+  background-color: #2d606f; /* base middle blue */
+  color:  #000;
+  text-align: center;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.clickable:active, .clickable:hover {
+  background-color: #72b5b1; /* highlight blue */
+  box-shadow: 0px 0px 0px rgba(55, 55, 53, 0.5);
+}
+
+.hide {
+  display: none !important;
+}
+
+.dialog_modal {
+  background-color: #1954a6;  /* base darkest blue */
+  position: relative;
+  border-radius: 7px;
+  padding: 10px;
+  flex-grow: 1;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.smallModal {
+  top: 43%;
+  left: 40%;
+  right: 40%;
+  bottom: 43%;
+  padding: 0px;
+  padding-top: 2.5%;
+  padding-left: 6.1%;
+}
+
+.closeModalButton_NOT_USED {
+  position: absolute;
+  font-size: 25px;
+  top: -25px;
+  right: -25px;
+  height: 80px;
+  width: 80px;
+  padding-top: 25px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.closeModalButton_NOT_USED img {
+  vertical-align: baseline;
+}
+
+#map,
+#clickableOverlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  max-width:100%;
+  background-size: cover;
+  background-position: center;
+}
+
+
+/* Lure Screen Style */
+
+#caption {
+  color: #fff;
+}
+
+#subcaption {
+  color: #fff;
+  padding-top: 10px;
+}
+
+#circlelabels {
+  position: relative;
+}
+
+.alert {
+  position: absolute;
+    z-index: 99;
+    bottom: 50%;
+    right: 50% 
+}
+
+
+/* Checklist Modal Style */
+
+#checklistLogo {
+  display: inline-block;
+  height: 150px;
+  width: 150px;
+  /*border-radius: 75px;*/
+  margin-right: 50px;
+  vertical-align: middle;
+  will-change: top, scale;
+  transition: transform 1s;
+}
+
+.voted {
+  position: relative;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in;
+  animation-name: voted;
+  animation-fill-mode: forwards;
+}
+
+.grow {
+  transform: scale(1.2);
+}
+
+@keyframes voted {
+  from { top: 0px; }
+  to { top: -1000px; }
+}
+
+#checklistHeader {
+  display: flex;
+  margin-bottom: 0px;
+}
+
+#checklistHeaderText {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 50px;
+}
+
+#checklistPrompt {
+  padding-bottom: 20px;
+}
+
+#checklistBody {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+#checklistContainer {
+  padding-top: 40px;
+  flex: 65;
+  padding-bottom: 60px;
+}
+
+#checklistSeparator {
+  width: 5px;
+  padding-top: 30px;
+  border-radius: 2.5px;
+  background-color: #2d606f; /* base middle blue */
+  margin: 0 10px;
+  flex: 0.5
+}
+
+.subactions>div {
+  float: left;
+  padding-left: 3vw;
+  margin-left: 10px;
+  padding-top: 10px;
+}
+
+.subactions label img {
+  width: 14px;
+  height: 14px;
+}
+
+.subactions .usermessages {
+  width: 90%;
+  padding-left: 3vw;
+  margin-left: 10px;
+}
+
+.subactionItemName {
+  font-size: 14px;
+
+}
+
+.actionItem {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+  color: #e9efe7; /* white */
+}
+
+.actionItemText {
+  display: flex;
+  padding-left: 3vw;
+  margin-left: 10px;
+  padding-bottom: 0px;
+}
+
+.actionItemCheckbox {
+  width: 50px;
+  height: 50px;
+  margin-right: 30px;
+  vertical-align: top;
+  position: relative;
+}
+
+.itemCheckboxImage {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+
+.actionItemBody {
+  vertical-align: top;
+  padding-left: 10px;
+}
+
+.actionItemName, div#checklistlearnMoreText h2 {
+  padding-bottom: 15px;
+  font-size: 2vw;
+  line-height: 1;
+  color: #e9efe7;
+  font-weight: normal;
+  margin: 0;
+}
+
+#checklistlearnMoreText {
+  color: #d2d940;
+  vertical-align: top;
+  padding-top: 20px;
+  flex: 30;
+}
+
+.learnMoreImage {
+  float: left;
+  padding-right: 20px;
+  width: 100%;
+}
+
+.learnMoreText {
+  margin-top: 0px;
+}
+
+.userinfo {
+  padding-top: 20px;
+}
+
+
+
+#submitActionButton_NOT_USED {
+  position: absolute;
+  bottom: 50px;
+  right: -20px;
+  height: 80px;
+  padding: 0px 40px;
+  border-radius: 40px;
+  line-height: 80px;
+  font-size: 40px;
+  color:#fff
+}
+
+
+/* Confirmation Modal Style */
+
+#confirmationContainer {
+  width: 95%;
+  padding-top: 80px;
+  margin: auto;
+}
+
+#confirmationTitle {
+  padding-bottom: 10px;
+}
+
+#confirmationEmailQuestion {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+#confirmationEmailPrivacyStatement,
+#emailPrompt {
+  padding-top: 20px;
+    padding-bottom: 20px;
+  font-size: 25px;
+  line-height: 30px;
+}
+
+#confirmationAction {
+  color: #d2d940; /* hightlight yellow */
+}
+
+#confirmationEmailQuestionYesButton {
+  /*
+  display: inline-block;
+  border-radius: 40px;
+  line-height: 70px;
+  margin-right: 50px;
+  color:#fff;
+  margin-top: 0px;
+  margin-left: 0px;
+  */
+  height: 80px;
+  /*
+  background-color: #64a5ff;
+  border-color: #64a5ff;
+  */
+}
+
+#confirmationEmailQuestionYesButton i {
+  color: red;
+}
+
+#confirmationEmailQuestionNoButton {
+  /*
+  display: inline-block;
+  height: 80px;
+  border-radius: 40px;
+  line-height: 80px;
+  margin-right: 50px;
+  */
+  color:#fff;
+  height: 80px;
+  margin-top: 50px;
+}
+
+#confirmationEmailQuestionNoButton i {
+  /*color: rgba(67, 164, 249, 0.70);*/
+  color: red;
+}
+
+#yescontact {
+  display: flex;
+  align-items: center;
+}
+
+
+/* Email Modal Style */
+
+#container {
+  width: 100%;
+  margin: auto;
+}
+
+#emailTextbox {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-right: 10px;
+}
+
+#write {
+  vertical-align: top;
+  display: inline-block;
+  font-size: 50px;
+  line-height: 70px;
+  /*font-family1: 'GillSansLight';*/
+  padding: 10px;
+  padding-top: 0px;
+  width: 100%;
+  margin-right: 10px;
+  height: 80px;
+  background: #fff;
+  border-radius: 7px;
+  resize: none;
+  border: none;
+}
+
+#write:focus {
+  outline: none;
+}
+
+
+#submitEmail {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  height: 80px;
+  padding: 0px 40px;
+  border-radius: 40px;
+  line-height: 80px;
+  font-size: 40px;
+  color: #fff;
+}
+
+/* Keyboard Style */
+
+#keyboard {
+  width:80%;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+#keyboard li {
+  float: left;
+  margin: 0 5px 5px 0;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 40px;
+  /*font-family1: 'GillSansLight';*/
+  vertical-align: middle;
+  text-align: center;
+  background-color: #2d606f; /* base middle blue */
+  color:  #e9efe7; /* white */
+  text-align: center;
+  border-radius: 7px;
+}
+
+#keyboard .invisibleKey {
+  visibility: hidden;
+  margin: 0px;
+  background-color: red;
+  clear: left;
+}
+
+#keyboard .email,
+#keyboard .left-shift,
+#keyboard .capslock {
+  width: auto;
+  font-size: 32px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.lastitem {
+  margin-right: 0;
+  clear: right;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+#keyboard .space {
+  width: 50%;
+}
+
+.on {
+  display: none;
+}
+
+#keyboard li:active {
+  position: relative;
+  top: 1px;
+  left: 1px;
+  background-color: #72b5b1; /* highlight blue */
+}
+
+.highlighted {
+  background-color: #72b5b1 !important; /* highlight blue */
+}
+
+/* Thanks Modal Style */
+
+#thanksModal {
+  background: url(../images/bokhallen_1.png);
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#thanksText {
+  text-align: center;
+  width: 100%;
+  margin: auto;
+}
+
+@keyframes sparkle {
+  0%   { opacity: 1; }
+  35%   { opacity: 0.0; }
+  45% {opacity: 0.0}
+  80%  { opacity: 1; }
+}
+
+.category {
+  animation-name: sparkle;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 12s;
+  background-color: #04464e !important;
+  fill: rgba(4, 70, 78, 0.4);
+  opacity: 1;
+  will-change: opacity;
+}
+
+.cont-checkbox {
+  margin-right: 0px;
+}
+
+input[type=checkbox] {
+  display: none;
+}
+
+input:checked + label .checked {
+  display: inline-block;
+}
+
+input:checked + label .unchecked {
+  display: none;
+}
+
+label .checked {
+  display: none;
+}
+
+label .unchecked {
+  display: inline-block;
+}
+
+input:checked + label .cover-checkbox svg {
+  stroke-dashoffset: 0;
+}
+
+.form-check-label {
+  white-space: nowrap;
+}
+
+label {
+  display: flex;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  position: relative;
+  /*opacity: 0.6;*/
+}
+
+label img {
+  width: 2vw;
+  height: 2vw;
+}
+
+.actionItemTextPadding {
+  width: 2vw;
+}
+
+.showmoreinfo {
+  cursor: pointer;
+}
+
+label .cover-checkbox {
+  position: absolute;
+  right: 5px;
+  top: 3px;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--box-shadow);
+  border: 2px solid #fff;
+  transition: transform var(--transition),
+    opacity calc(var(--transition) * 1.2) linear;
+  opacity: 0;
+  transform: scale(0);
+}
+
+label .cover-checkbox svg {
+  width: 13px;
+  height: 11px;
+  display: inline-block;
+  vertical-align: top;
+  fill: none;
+  margin: 5px 0 0 3px;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 16px;
+  transition: stroke-dashoffset 0.4s ease var(--transition);
+  stroke-dashoffset: 16px;
+}
+
+label .info {
+  text-align: center;
+  margin-top: 0.2rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+#labelwrapper {
+  display: flex; 
+  justify-content: center;
+  height:800px
+}
+
+#circlelabels>div:nth-child(1) {
+  top: 0px;
+  left: 0px;
+}
+
+#circlelabels>div:nth-child(2) {
+  top: -100px;
+  left: 210px;
+}
+
+#circlelabels>div:nth-child(3) {
+  top: -530px;
+  left: 470px;
+}
+
+#circlelabels>div:nth-child(4) {
+  top: -850px;
+  left: 817px
+}
+
+#circlelabels>div:nth-child(5) {
+  top: -920px;
+  left: 670px
+}
+
+.heartcontainer {
+  height: 280px;
+  width: 280px;
+  padding-top: 0px;
+  cursor: pointer;
+  font-size: 280px;
+  color: #c82727;
+  display: flex;
+}
+.heartcontainer .text {
+  position: relative;
+  width: 150px;
+  left: 70px;
+  top: -190px;
+  font-size: 16px;
+  color: white;
+  font-family: 'Open Sans';
+  text-align: center;
+}
+
+.heart {
+  width: 230px;
+  height: 230px;
+  position: absolute;
+  transform: rotate(-45deg);
+  border: 5px solid rgb(200, 39, 39);
+  border-radius: 5px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+
+.heart:before {
+  top: -115px;
+  left: -5px;
+  transform: rotate(45deg);
+}
+
+.heart:after {
+  top: -5px;
+  left: 105px;
+  transform: rotate(135deg);
+}
+
+.heart:before,
+.heart:after {
+    content: "";
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    position: absolute;
+    border: 5px solid rgb(200, 39, 39);
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+}
+
+.heart .text {
+  position: absolute;
+  z-index: 99;
+  transform: translate(20%, 60%) rotate(45deg);
+  font-size: 1.2em;
+}
+
+.heart:hover,
+.heart:hover::before,
+.heart:hover::after {
+  background-color: rgb(150, 7, 7);
+  border-color: rgb(150, 7, 7);
+}
+
+/*
+.heart {
+  position: absolute;
+  width: 400px;
+  height: 150px;
+  text-align: center;
+  font-weight: 700;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.heart:hover::before,
+.heart:hover::after {
+  background-color: rgb(150, 7, 7);
+}
+
+.heart:before,
+.heart:after {
+  position: absolute;
+  content: "";
+  left: 200px;
+  top: 0;
+  width: 200px;
+  height: 300px;
+  background: rgb(200, 39, 39);
+  -moz-border-radius: 100px 100px 0 0;
+  border-radius: 100px 100px 0 0;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  -o-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+}
+
+.heart:after {
+  left: 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transform-origin: 100% 100%;
+  -moz-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  -o-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+
+.heart .text {
+  position: absolute;
+  z-index: 99;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2em;
+}
+*/
+.buttonheart {
+  position: absolute;
+  width: 200px;
+  height: 75px;
+  text-align: center;
+  font-weight: 700;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.buttonheart:hover::before,
+.buttonheart:hover::after {
+  background-color: rgb(150, 7, 7);
+}
+
+.buttonheart:before,
+.buttonheart:after {
+  position: absolute;
+  content: "";
+  left: 100px;
+  top: 0;
+  width: 100px;
+  height: 150px;
+  background: rgb(200, 39, 39);
+  -moz-border-radius: 50px 50px 0 0;
+  border-radius: 50px 50px 0 0;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  -o-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+}
+
+.buttonheart:after {
+  left: 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transform-origin: 100% 100%;
+  -moz-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  -o-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+}
+
+.buttonheart .text {
+  position: absolute;
+  z-index: 99;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.6em;
+  white-space: nowrap;
+}
+
+.rain.fa-heart, .rain.fa-kiss-wink-heart {
+  /*color: rgb(200, 39, 39, 0.70);*/
+  color: red;
+  font-size: 25px;
+  position: absolute;
+  animation:  heartMove linear 1;
+  top: -10vh;
+  z-index: 0;
+}
+
+.rain.fa-heart.white {
+  color: white;
+}
+
+.rain.fa-heart.blue {
+  color: rgb(38, 38, 207);
+}
+
+.rain.fa-heart-broken {
+  /*color: rgba(67, 164, 249, 0.70);*/
+  color: red;
+  font-size: 25px;
+  position: absolute;
+  animation:  heartMove linear 1;
+  top: -10vh;
+  z-index: 0;
+}
+
+.pulse.fa-heart {
+  animation: fa-beat 3s ease infinite;
+}
+
+.heartclosebutton {
+  position: absolute;
+  top: -50px;
+  right: -20px;
+  height: 80px;
+  width: 80px;
+  padding-top: 25px;
+  cursor: pointer;
+  font-size: 80px;
+  color: rgb(67 165 249);
+}
+
+.heartclosebutton:hover {
+  color: rgb(0 131 243);
+}
+
+.heartclosebutton img {
+  position: relative;
+  left: 25px;
+  top: -90px;
+}
+
+.heartclosebutton .fa-xmark,
+.heartclosebutton .fa-times {
+  color: #ffffff;
+  position:relative;
+  top:-96px;
+  left:21px;
+  font-size: 48px
+
+}
+
+.heartcontinuebutton {
+  position: absolute;
+  bottom: -40px;
+  right: -20px;
+  height: 120px;
+  width: 120px;
+  padding-top: 0px;
+  cursor: pointer;
+  font-size: 120px;
+  color: #c82727;
+}
+
+.heartcontinuebutton:hover {
+  color:rgb(150, 7, 7);
+}
+
+.heartcontinuebutton img {
+  position: relative;
+  left: 25px;
+  top: -90px;
+}
+
+.heartcontinuebutton .text {
+  position: relative;
+    left: 0;
+    top: -80px;
+    font-size: 20px;
+    color: white;
+    font-family: 'Open Sans';
+    text-align: center;
+}
+
+.heartnothanksbutton {
+  position: relative;
+  height: 120px;
+  width: 120px;
+  padding-top: 0px;
+  cursor: pointer;
+  font-size: 120px;
+  color: rgba(67, 165, 249, 0.7);
+}
+
+.heartnothanksbutton:hover {
+  color: rgba(0, 131, 243, 0.7);
+}
+
+.heartnothanksbutton .text {
+  position: relative;
+  left: 0;
+  top: -95px;
+  font-size: 16px;
+  color: white;
+  font-family: 'Open Sans';
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.heartemailmebutton {
+  position: relative;
+  height: 120px;
+  width: 120px;
+  padding-top: 0px;
+  cursor: pointer;
+  font-size: 120px;
+  color: #c82727;
+}
+
+.heartemailmebutton:hover {
+  color:rgb(150, 7, 7);
+}
+
+.heartemailmebutton .text {
+  position: relative;
+    left: 0;
+    top: -80px;
+    font-size: 22px;
+    color: white;
+    font-family: 'Open Sans';
+    text-align: center;
+}
+
+@keyframes heartMove {
+  0%{
+      transform: translateY(0vh) ;
+  }
+  100%{
+      transform: translateY(100vh) ;
+  }
+}
+
+@keyframes fa-beat {
+  0% {
+    transform:scale(1);
+  }
+  10% {
+    transform:scale(1.40);
+  }
+  30% {
+    transform:scale(1);
+  }
+  40% {
+    transform:scale(1.40);
+  }
+  60% {
+    transform:scale(1);
+  }
+}
+
+
+@media screen and (max-width: 1920px) and (min-width: 0px){
+
+  #labelwrapper {
+    display: flex; 
+    justify-content: center;
+    height: 100%
+  }
+
+  #circlelabels {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  #circlelabels>div:nth-child(1) {
+    top: 0%;
+    left: 0%;
+    align-items: start;
+  }
+  
+  #circlelabels>div:nth-child(2) {
+    top: 60%;
+    left: 25%;
+    align-items: flex-end;
+  }
+  
+  #circlelabels>div:nth-child(3) {
+    top: 0%;
+    left: 50%;
+    align-items: start;
+  }
+  
+  #circlelabels>div:nth-child(4) {
+    top: 60%;
+    left: 75%;
+    align-items: flex-end;
+  }
+  
+  #circlelabels>div:nth-child(5) {
+    top: 0%;
+    left: 100%;
+    align-items: start;
+  }
+
+  .heartcontainer {
+    height: 510px;
+    width: 290px;
+    font-size: 290px;
+    line-height: 290px;
+  }
+
+  .heartcontainer .fa {
+    position: relative;
+  }
+
+  .heartcontainer .text {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 20%;
+    font-size: 18px;
+    padding: 10%;
+  }
+
+  #keyboard {
+    width: 80%;
+  }
+  #keyboard li {
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 40px;
+  }
+
+  #keyboard .email, #keyboard .left-shift, #keyboard .capslock {
+    width: auto;
+    font-size: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }  
+}
+
+@media screen and (max-width: 1536px) and (min-width: 0px) {
+
+  #labelwrapper {
+    display: flex; 
+    justify-content: center;
+  }
+
+  .heartcontainer {
+    height: 455px;
+    width: 260px;
+    font-size: 260px;
+    line-height: 260px;
+  }
+
+  .heartcontainer .fa {
+    position: relative;
+  }
+
+  .heartcontainer .text {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 20%;
+    font-size: 16px;
+    padding: 10%;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 0px) {
+
+  #labelwrapper {
+    display: flex; 
+    justify-content: center;
+  }
+
+  .heartcontainer {
+    height: 438px;
+    width: 250px;
+    font-size: 250px;
+    line-height: 250px;
+  }
+
+  .heartcontainer .fa {
+    position: relative;
+  }
+
+  .heartcontainer .text {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 20%;
+    font-size: 16px;
+    padding: 10%;
+  }
+}
+
+@media screen and (max-width: 1366px) and (min-width: 0px) {
+
+  #labelwrapper {
+    display: flex; 
+    justify-content: center;
+  }
+
+  .heartcontainer {
+    height: 438px;
+    width: 240px;
+    font-size: 240px;
+    line-height: 240px;
+  }
+
+  .heartcontainer .fa {
+    position: relative;
+  }
+
+  .heartcontainer .text {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 20%;
+    font-size: 14px;
+    padding: 10%;
+  }
+}
+
+@media screen and (max-width: 1280px) and (min-width: 0px) {
+
+  #labelwrapper {
+    display: flex; 
+    justify-content: center;
+  }
+
+  .heartcontainer {
+    height: 350px;
+    width: 200px;
+    font-size: 200px;
+    line-height: 200px;
+  }
+
+  .heartcontainer .fa {
+    position: relative;
+  }
+
+  .heartcontainer .text {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 20%;
+    font-size: 12px;
+    padding: 10%;
+  }
+}
+
+/* anpassa till KTH Bibliotekets iPad*/
+@media screen and (max-width: 1080px) and (min-width: 0px) {
+  .heartcontainer {
+    height: 335px;
+    width: 185px;
+    font-size: 185px;
+    line-height: 185px;
+  }
+
+  .heartcontainer .text {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 20%;
+    font-size: 12px;
+    padding: 10%;
+  }
+}
+
+/* polopoly */
+@media screen and (max-width: 990px) and (min-width: 0px) {  
+
+}
+
+/* anpassa till mobil*/
+@media screen and (max-width: 768px) and (min-width: 0px) {
+
+  body {
+    overflow: auto;
+  }
+
+  #wrapper {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 25px 25px 25px;
+  }
+
+  #caption {
+    position: relative;
+    top: 10px;
+    left: 0%;
+    color: #2d5f6f;
+    padding: 10px 10px 30px 10px;
+  }
+
+  #maincaption {
+    font-size: 20px;
+  }
+
+  #subcaption {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .categoryLabel {
+    position: relative;
+    margin: 10px 10px;
+    padding: 20px;
+  }
+
+  #circlelabels {
+    display: block;
+  }
+
+  .heartcontainer {
+    height: 250px;
+    width: 250px;
+    font-size: 250px;
+    line-height: 250px;
+  }
+
+  .heartcontainer .text {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 20%;
+    font-size: 14px;
+    padding: 10%;
+  }
+
+  .clickable {
+    font-size: 25px;
+  }
+
+  .actionItemName, div#checklistlearnMoreText h2 {
+    font-size: 5vw;
+  }
+
+  label img {
+    width: 5vw;
+    height: 5vw;
+  }
+  
+  .actionItemTextPadding {
+    width: 5vw;
+  }
+
+  #map, #clickableOverlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 420px;
+    height: 233px;
+    max-width: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+
+  #checklistPrompt {
+    padding-bottom: 10px;
+  }
+
+  #checklistBody {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #checklistHeader {
+    margin-right: 40px;
+    flex-direction: column;
+  }
+
+  #checklistHeaderText {
+    margin-top: 30px;
+  }
+
+  #checklistContainer {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+
+  .userinfo {
+    padding-top: 10px;
+  }
+
+  .closeModalButton_NOT_USED {
+    position: absolute;
+    top: -12px;
+    right: -4px;
+    height: 56px;
+    width: 56px;
+    padding-top: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .closeModalButton_NOT_USED img {
+    width: 25px;
+    height: 25px;
+  }
+
+  #submitActionButton_NOT_USED {
+    position: relative;
+    bottom: 0px;
+    right: 0px;
+    height: 80px;
+    padding: 0px 40px;
+    border-radius: 40px;
+    line-height: 90px;
+    font-size: 40px;
+    margin: 10px 0px;
+    }
+
+  .heartclosebutton {
+    top: -30px;
+    right: -10px;
+    height: 50px;
+    width: 50px;
+    font-size: 50px;
+  }
+
+  .heartclosebutton .fa-xmark,
+  .heartclosebutton .fa-times {
+    top: -60px;
+    left: 14px;
+    font-size: 28px;
+  }
+
+  .heartcontinuebutton {
+    bottom: -20px;
+    right: -20px;
+    height: 80px;
+    width: 80px;
+    font-size: 80px;
+}
+
+  .heartcontinuebutton .text {
+    left: 0px;
+    top: -56px;
+    font-size: 14px;
+  }
+
+  #checklistSeparator {
+      width: 100%;
+      padding-top: 5px;
+      border-radius: 2.5px;
+      background-color: #2d606f;
+      margin: 0px 0px 0px 0px;
+  }
+
+  .heartemailmebutton .text {
+    font-size: 16px;
+  }
+  
+  .heartnothanksbutton .text {
+    font-size: 16px;
+    top: -80px;
+  }
+
+  #write {
+    font-size: 20px;
+    margin-bottom: 50px;
+  }
+
+  #keyboard {
+    display: none;
+  }
+
+  #submitEmail {
+    position: relative;
+    bottom: 0px;
+    right: 0px;
+    height: 80px;
+    padding: 0px 40px;
+    border-radius: 40px;
+    line-height: 80px;
+  }
+
+  #emailModal #container {
+    width: 100%
+  }
+
+    .circle-text {
+      width: 300px;
+      height: 240px;
+      display: block;
+      border-radius: 50%;
+      text-align: center;
+      min-width: 50px;
+      min-height: 50px;
+    }
+
+    .title {
+      font-size: 4.5vw 
+    }
+
+    .instruction {
+      font-size: 3vw;
+  }
+
+  #checklistLogo { 
+    height: 120px;
+    width: 120px;
+  }
+
+  .heart {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    transform: rotate(-45deg);
+    border: 5px solid rgb(200, 39, 39);
+    border-radius: 5px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    margin-top: 100px;
+  }
+  
+  .heart:before {
+    top: -90px;
+    left: -5px;
+    transform: rotate(45deg);
+  }
+  
+  .heart:after {
+    top: -5px;
+    left: 80px;
+    transform: rotate(135deg);
+  }
+  
+  .heart:before,
+  .heart:after {
+      content: "";
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      position: absolute;
+      border: 5px solid rgb(200, 39, 39);
+      border-bottom-color: transparent;
+      border-right-color: transparent;
+  }
+  
+  .heart .text {
+    position: absolute;
+    z-index: 99;
+    transform: translate(25%, 0%) rotate(45deg);
+    font-size: 1.2em;
+  }
+  
+  .heart:hover,
+  .heart:hover::before,
+  .heart:hover::after {
+    background-color: rgb(150, 7, 7);
+    border-color: rgb(150, 7, 7);
+  }
+
+  /*
+  .heart {
+    position: relative;
+    width: 300px;
+    height: 240px;
+    text-align: center;
+    font-weight: 700;
+    line-height: normal;
+    margin: 10px 10px;
+    padding: 20px;
+  }
+  
+  .heart:before,
+  .heart:after {
+    position: absolute;
+    content: "";
+    left: 150px;
+    top: 0;
+    width: 150px;
+    height: 240px;
+    background: rgb(200, 39, 39);;
+    -moz-border-radius: 75px 75px 0 0;
+    border-radius: 75px 75px 0 0;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-transform-origin: 0 100%;
+    -moz-transform-origin: 0 100%;
+    -ms-transform-origin: 0 100%;
+    -o-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+  }
+  
+  .heart:after {
+    left: 0;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transform-origin: 100% 100%;
+    -moz-transform-origin: 100% 100%;
+    -ms-transform-origin: 100% 100%;
+    -o-transform-origin: 100% 100%;
+    transform-origin: 100% 100%;
+  }
+  
+  .heart .text {
+    position: absolute;
+    z-index: 99;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1em;
+  }
+
+  */
+
+  #yescontact {
+    align-items: flex-start;;
+    flex-direction: column;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

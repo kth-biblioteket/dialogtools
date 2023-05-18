@@ -1,0 +1,44 @@
+version: '3.6'
+
+services:
+  dialogtools:
+    container_name: dialogtools
+    image: ghcr.io/kth-biblioteket/dialogtools:${REPO_TYPE}
+    restart: always
+    depends_on:
+      - dialogtools-db
+    env_file:
+      - dialogtools.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dialogtools.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`${PATHPREFIX}`)"
+      - "traefik.http.routers.dialogtools.entrypoints=websecure"
+      - "traefik.http.routers.dialogtools.tls=true"
+      - "traefik.http.routers.dialogtools.tls.certresolver=myresolver"
+    volumes:
+      - "/local/docker/dialogtools/imagebank:/app/imagebank"
+    networks:
+      - "apps-net"
+
+  dialogtools-db:
+    container_name: dialogtools-db
+    image: mysql:8.0
+    volumes:
+      - persistent-dialogtools-db:/var/lib/mysql
+      - ./dbinit:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    networks:
+      - "apps-net"
+
+volumes:
+  persistent-dialogtools-db:
+
+networks:
+  apps-net:
+    external: true

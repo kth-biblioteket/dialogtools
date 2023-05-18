@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('../partials/adminhead'); %>
+</head>
+
+<body>
+    <% var url = new URL(admindata.url) %>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+            <a class="navbar-brand" href="#">
+                <img alt="" src="https://apps.lib.kth.se/polopoly/KTH_Logotyp.svg" width="75" height="75"
+                    class="d-inline-block align-top"> KTH Bibliotekets Dialog System
+            </a>
+            <button aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation"
+                class="navbar-toggler collapsed"><span class="navbar-toggler-icon"></span></button>
+            <div class="navbar-collapse collapse" id="basic-navbar-nav">
+                <div class="navbar-nav">
+                </div>
+            </div>
+            <form style="flex:2;display:flex;justify-content:flex-end">
+                <button type="button" class="btn btn-outline-success" onclick="logout()">Logout</button>
+            </form>
+            <div id="gradientBorder"></div>
+        </nav>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">General</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="actions-tab" data-bs-toggle="tab" data-bs-target="#actions" type="button" role="tab" aria-controls="actions" aria-selected="false">Kategorier</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="choices-tab" data-bs-toggle="tab" data-bs-target="#choices" type="button" role="tab" aria-controls="choices" aria-selected="false">Alternativ</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="subchoices-tab" data-bs-toggle="tab" data-bs-target="#subchoices" type="button" role="tab" aria-controls="subchoices" aria-selected="false">Under-alternativ</button>
+              </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                <div id="dialog-events" class="col">
+                    <div style="margin-bottom:10px" class="card">
+                        <div class="card-header">
+                            <h3>Events</h3>
+                            <div>Välj event</div>
+                            <select id="events-select-list" class="form-select"></select>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <div id="event-edit" class="eventedit"></div>
+                        </div>
+                        <div class="card-footer text-muted" style="justify-content: end;display: flex;">
+                            <button style='margin-right:10px' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#add-event-modal' data-id=''>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="actions" role="tabpanel" aria-labelledby="actions-tab">
+                <div id="dialog-actions" class="col">
+                    <div style="margin-bottom:10px" class="card">
+                        <div class="card-header">
+                            <input class="form-control" type="hidden" id="dialog-actions-event_id" name="dialog-actions-event_id">
+                            <h3 id="dialog-actions-event_name"></h3>
+                            <div>Välj action</div>
+                            <select id="actions-select-list" class="form-select"></select>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <div id="action-edit" class="dialogedit"></div>
+                        </div>
+                        <div class="card-footer text-muted" style="justify-content: end;display: flex;">
+                            <button style='margin-right:10px' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#add-action-modal' data-id=''>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="choices" role="tabpanel" aria-labelledby="choices-tab">
+                <div id="dialog-choices" class="col">
+                    <div style="margin-bottom:10px" class="card">
+                        <div class="card-header">
+                            <input class="form-control" type="hidden" id="dialog-choices-action_id" name="dialog-choices-action_id">
+                            <h3 id="dialog-choices-action_name"></h3>
+                            <div>Välj alternativ</div>
+                            <select id="choices-select-list" class="form-select"></select>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <div id="choice-edit" class="dialogedit" ></div>
+                        </div>
+                        <div class="card-footer text-muted" style="justify-content: end;display: flex;">
+                            <button style='margin-right:10px' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#add-actionchoice-modal' data-id=''>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="subchoices" role="tabpanel" aria-labelledby="subchoices-tab">
+                <div id="dialog-subchoices" class="col">
+                    <div style="margin-bottom:10px" class="card">
+                        <div class="card-header">
+                            <input class="form-control" type="hidden" id="dialog-subchoices-actionchoice_id" name="dialog-subchoices-actionchoice_id">
+                            <h3 id="dialog-subchoices-actionchoice_name"></h3>
+                            <div>Välj Under-alternativ</div>
+                            <select id="subchoices-select-list" class="form-select"></select>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <div id="subchoice-edit" class="dialogedit" ></div>
+                        </div>
+                        <div class="card-footer text-muted" style="justify-content: end;display: flex;">
+                            <button style='margin-right:10px' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#add-subactionchoice-modal' data-id=''>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="add-event-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Skapa Event</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/dialogtools/api/v1/event/" id="addevent-form">
+                        <input class="form-control" type="hidden" name="id">
+                        <div class="form-group">
+                            <label for="email">Namn</label>
+                            <input class="form-control" type="text" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">Name</label>
+                            <input class="form-control" type="text" name="name_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Beskrivning</label>
+                            <textarea class="form-control" type="text" name="description" row="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Description</label>
+                            <textarea class="form-control" type="text" name="description_en" row="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Startdatum</label>
+                            <input class="form-control" type="date" max="2999-12-31" name="startdate">
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">Slutdatum</label>
+                            <input class="form-control" type="date" max="2999-12-31" name="enddate">
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Resultat rubrik</label>
+                            <input class="form-control" type="text" name="resultstitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Results title</label>
+                            <input class="form-control" type="text" name="resultstitle_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">Resultat underrubrik</label>
+                            <input class="form-control" type="text" name="resultssubtitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Results subtitle</label>
+                            <input class="form-control" type="text" name="resultssubtitle_en">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="db_create(this, 'addevent-form', 'POST', 'events-select-list', '/dialogtools/api/v1/events', 'add-event-modal', false, '', '')" id="btnAddEventSubmit">Lägg till</button>
+                        <button type="button" class="btn btn-danger float-right" data-bs-dismiss="modal">Avbryt</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="add-action-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Skapa kategori</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/dialogtools/api/v1/action/" id="addaction-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input class="form-control" type="text" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="name_en">Name</label>
+                            <input class="form-control" type="text" name="name_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Beskrivning</label>
+                            <input class="form-control" type="text" name="description">
+                        </div>
+                        <div class="form-group">
+                            <label for="description_en">Description</label>
+                            <input class="form-control" type="text" name="description_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="image_id">Bild</label>
+                            <select id="image_id" name="image_id" class="form-select">`
+                                <% admindata.images.forEach(image => { %>
+                                    <option value="<%=image.id%>"><%=image.name%></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="rgbacolor">Färg</label>
+                            <input class="form-control" type="text" name="rgbacolor">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="db_create(this, 'addaction-form', 'POST', 'actions-select-list', '/dialogtools/api/v1/event/parentid/actions', 'add-action-modal', true, 'event_id', 'dialog-actions-event_id')" id="btnAddActionSubmit">Lägg till</button>
+                        <button type="button" class="btn btn-danger float-right" data-bs-dismiss="modal">Avbryt</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="add-actionchoice-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Skapa alternativ</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/dialogtools/api/v1/actionchoice/" id="addchoice-form">
+                        <div class="form-group">
+                            <label for="actionchoicetype_id">Typ</label>
+                            <select id="actionchoicetype_id" name="actionchoicetype_id" class="form-select">`
+                                <% admindata.actionchoicetypes.forEach(type => { %>
+                                    <option value="<%=type.id%>"><%=type.type%></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Namn</label>
+                            <input class="form-control" type="text" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="name_en">Name</label>
+                            <input class="form-control" type="text" name="name_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Beskrivning</label>
+                            <input class="form-control" type="text" name="description">
+                        </div>
+                        <div class="form-group">
+                            <label for="description_en">Description</label>
+                            <input class="form-control" type="text" name="description_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="image_id">Bild</label>
+                            <select id="image_id" name="image_id" class="form-select">`
+                                <% admindata.images.forEach(image => { %>
+                                    <option value="<%=image.id%>"><%=image.name%></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sortorder">Sortering</label>
+                            <input class="form-control" type="text" name="sortorder">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="db_create(this, 'addchoice-form', 'POST', 'choices-select-list', '/dialogtools/api/v1/action/parentid/actionchoices', 'add-actionchoice-modal', true, 'action_id', 'dialog-choices-action_id')" id="btnAddChoiceSubmit">Lägg till</button>
+                        <button type="button" class="btn btn-danger float-right" data-bs-dismiss="modal">Avbryt</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="add-subactionchoice-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Skapa under-alternativ</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/dialogtools/api/v1/subactionchoice/" id="addsubchoice-form">
+                        <div class="form-group">
+                            <label for="actionchoicetype_id">Typ</label>
+                            <select id="actionchoicetype_id" name="actionchoicetype_id" class="form-select">`
+                                <% admindata.actionchoicetypes.forEach(type => { %>
+                                    <option value="<%=type.id%>"><%=type.type%></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Namn</label>
+                            <input class="form-control" type="text" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="name_en">Name</label>
+                            <input class="form-control" type="text" name="name_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Beskrivning</label>
+                            <input class="form-control" type="text" name="description">
+                        </div>
+                        <div class="form-group">
+                            <label for="description_en">Description</label>
+                            <input class="form-control" type="text" name="description_en">
+                        </div>
+                        <div class="form-group">
+                            <label for="image_id">Bild</label>
+                            <select id="image_id" name="image_id" class="form-select">`
+                                <% admindata.images.forEach(image => { %>
+                                    <option value="<%=image.id%>"><%=image.name%></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sortorder">Sortering</label>
+                            <input class="form-control" type="text" name="sortorder">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="db_create(this, 'addsubchoice-form', 'POST', 'subchoices-select-list', '/dialogtools/api/v1/actionchoice/parentid/subactionchoices', 'add-subactionchoice-modal', true, 'actionchoice_id', 'dialog-subchoices-actionchoice_id')" id="btnAddSubChoiceSubmit">Lägg till</button>
+                        <button type="button" class="btn btn-danger float-right" data-bs-dismiss="modal">Avbryt</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    <%- include('../partials/adminscript'); %>
+    <script>
+        var images
+        jscolor.presets.default = {
+            format:'rgba'
+        };
+
+        $(document).ready(function(){
+            //Definiera javascriptobject med data från EJS
+            images = JSON.parse(`<%- JSON.stringify(admindata.images)%>`)
+            actionchoicetypes = JSON.parse(`<%- JSON.stringify(admindata.actionchoicetypes)%>`)
+
+            $('#events-select-list').on('change', function() {
+                getevent_($(this).val());
+            });
+            $('#actions-select-list').on('change', function() {
+                getaction_($(this).val());
+            });
+            $('#choices-select-list').on('change', function() {
+                getchoice_($(this).val());
+            });
+            $('#subchoices-select-list').on('change', function() {
+                getsubchoice_($(this).val());
+            });
+
+            getselectcontent("events-select-list", "/dialogtools/api/v1/events")
+        });
+
+        function resetForm(selector) 
+        {
+            $(selector)[0].reset();
+        }
+
+        function getselectcontent(listselector, url) {
+            $.ajax({
+                type: "GET",
+                //url: '/dialogtools/api/v1/events',
+                url: url,
+                success: function (response) {
+                    var html = "";
+                    selecthtml = "";
+                    if(response.length) {
+                        selecthtml += `<option value="0" selected>Inget valt</option>`
+                        $.each(response, function(key,value) {
+                            selecthtml += `<option value="${value.id}">${value.name}</option>`
+                        })
+                    } else {
+                        selecthtml += '<div class="alert alert-warning">';
+                        selecthtml += 'No records found!';
+                        selecthtml += '</div>';
+                    }
+                    $("#" + listselector).html(selecthtml);
+                    //$("#events-select-list").html(selecthtml);
+                }
+            });
+        }
+        
+        function getevent_(event_id) {
+            //clear boxes
+            $("#action-edit").html('');
+            $("#actions-select-list").html('');
+            $("#dialog-actions-event_name").html('');
+            $("#dialog-actions-event_id").val('');
+            $("#choice-edit").html('');
+            $("#choices-select-list").html('');
+            $("#dialog-choices-action_name").html('');
+            $("#dialog-choices-action_id").val('');
+            $("#subchoice-edit").html('');
+            $("#subchoices-select-list").html('');
+            $("#dialog-subchoices-actionchoice_name").html('');
+            $("#dialog-subchoices-actionchoice_id").val('');
+
+            if (event_id === "0") {
+                $("#event-edit").html('');
+                $("#dialog-actions-event_id").val('');
+                $("#dialog-actions-event_name").html('')
+            } else {
+                $.ajax({
+                        type: "GET",
+                        url: '/dialogtools/api/v1/event/' + event_id,
+                        beforeSend: function () {
+                        },
+                        success: function (response) {
+                            response=response[0]
+                            
+                            startdate_locale = new Date(response.startdate).toLocaleDateString()
+                            enddate_locale = new Date(response.enddate).toLocaleDateString()
+                            var html = `
+                                    <form action="/dialogtools/api/v1/event/" id="editevent-form">
+                                    <input class="form-control" type="hidden" name="id">
+                                    <div class="form-group">
+                                        <label for="email">Namn</label>
+                                        <input class="form-control" type="text" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="first_name">Name</label>
+                                        <input class="form-control" type="text" name="name_en">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last_name">Beskrivning</label>
+                                        <textarea class="form-control" type="text" name="description" row="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Description</label>
+                                        <textarea class="form-control" type="text" name="description_en" row="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Startdatum</label>
+                                        <input class="form-control" type="date" max="2999-12-31" name="startdate">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="first_name">Slutdatum</label>
+                                        <input class="form-control" type="date" max="2999-12-31" name="enddate">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last_name">Resultat rubrik</label>
+                                        <input class="form-control" type="text" name="resultstitle">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Results title</label>
+                                        <input class="form-control" type="text" name="resultstitle_en">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="first_name">Resultat underrubrik</label>
+                                        <input class="form-control" type="text" name="resultssubtitle">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last_name">Results subtitle</label>
+                                        <input class="form-control" type="text" name="resultssubtitle_en">
+                                    </div>
+                                    <button type="button" class="btn btn-primary float-right" onclick="db_update(this, 'editevent-form', 'PUT', 'events-select-list', '/dialogtools/api/v1/events')" id="btnUpdateEventSubmit">Update</button>
+                                    <button type="button" class="btn btn-danger float-right" onclick="db_delete(this, 'editevent-form', 'DELETE', 'events-select-list', '/dialogtools/api/v1/events', 'event-edit', '', '', '')" id="btnDeleteEventSubmit">Delete</button>
+                                </form>
+                            `
+                            $('#event-edit').html(html);
+                            $("#editevent-form [name=\"id\"]").val(response.id);
+                            $("#editevent-form [name=\"name\"]").val(response.name);
+                            $("#editevent-form [name=\"name_en\"]").val(response.name_en);
+                            $("#editevent-form [name=\"description\"]").val(response.description);
+                            $("#editevent-form [name=\"description_en\"]").val(response.description_en);
+                            $("#editevent-form [name=\"description\"]").val(response.description);
+                            $("#editevent-form [name=\"startdate\"]").val(startdate_locale);
+                            $("#editevent-form [name=\"enddate\"]").val(enddate_locale);
+                            $("#editevent-form [name=\"resultstitle\"]").val(response.resultstitle);
+                            $("#editevent-form [name=\"resultstitle_en\"]").val(response.resultstitle_en);
+                            $("#editevent-form [name=\"resultssubtitle\"]").val(response.resultssubtitle);
+                            $("#editevent-form [name=\"resultssubtitle_en\"]").val(response.resultssubtitle_en);
+                            
+                            $("#dialog-actions-event_id").val(event_id);
+                            $("#dialog-actions-event_name").html(response.name)
+                            getselectcontent("actions-select-list", "/dialogtools/api/v1/event/" + event_id + "/actions")
+                        }
+                });
+            }
+        }
+
+        function getaction_(action_id) {
+            $("#choice-edit").html('');
+            $("#choices-select-list").html('');
+            $("#dialog-choices-action_name").html('');
+            $("#dialog-choices-action_id").val('');
+            $("#subchoice-edit").html('');
+            $("#subchoices-select-list").html('');
+            $("#dialog-subchoices-actionchoice_name").html('');
+            $("#dialog-subchoices-actionchoice_id").val('');
+            if (action_id === "0") {
+                $("#action-edit").html('');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: '/dialogtools/api/v1/action/' + action_id,
+                    success: function (response) {
+                        response=response[0];
+                        var html = `
+                            <form action="/dialogtools/api/v1/action/" id="editaction-form">
+                                <input class="form-control" type="hidden" name="id">
+                                <input class="form-control" type="hidden" name="event_id">
+                                <div class="form-group">
+                                    <label for="image_id">Bild</label>
+                                    <select id="image_id" name="image_id" class="form-select">`
+                                            images.forEach(image => {
+                                                html += `<option ${image.id==response.image_id ? 'selected' : ''} value="${image.id}">${image.name}</option>`
+                                            })
+                            html += `</select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Namn</label>
+                                    <input class="form-control" type="text" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name_en">Name</label>
+                                    <input class="form-control" type="text" name="name_en">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Beskrivning</label>
+                                    <input class="form-control" type="text" name="description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description_en">Description</label>
+                                    <input class="form-control" type="text" name="description_en">
+                                </div>
+                                <!--div class="form-group">
+                                    <label for="image_id">Bild</label>
+                                    <input class="form-control" type="text" name="image_id">
+                                </div-->
+                                <div class="form-group">
+                                    <label for="rgbacolor">Färg</label>
+                                    <input data-jscolor="{alpha:${parseFloat(response.rgbacolor.split(',')[3])}}" class="form-control" type="text" id="action-${response.id}-rgbacolor" name="rgbacolor" value="${response.rgbacolor}">
+                                </div>
+                                <button type="button" class="btn btn-primary float-right" onclick="db_update(this, 'editaction-form', 'PUT', 'actions-select-list', '/dialogtools/api/v1/event/parentid/actions', true, 'event_id', 'dialog-actions-event_id')" id="btnUpdateActionSubmit">Update</button>
+                                <button type="button" class="btn btn-danger float-right" onclick="db_delete(this, 'editaction-form', 'DELETE', 'actions-select-list', '/dialogtools/api/v1/event/parentid/actions', 'action-edit', true, 'event_id', 'dialog-actions-event_id')" id="btnDeleteActionSubmit">Delete</button>
+                            </form>
+                        `
+                        $('#action-edit').html(html);
+                        jscolor.install()
+                        $("#editaction-form [name=\"id\"]").val(response.id);
+                        $("#editaction-form [name=\"event_id\"]").val(response.event_id);
+                        $("#editaction-form [name=\"name\"]").val(response.name);
+                        $("#editaction-form [name=\"name_en\"]").val(response.name_en);
+                        $("#editaction-form [name=\"description\"]").val(response.description);
+                        $("#editaction-form [name=\"description_en\"]").val(response.description_en);
+                        
+                        $("#dialog-choices-action_id").val(action_id);
+                        $("#dialog-choices-action_name").html(response.name)
+                        getselectcontent("choices-select-list", "/dialogtools/api/v1/action/" + action_id + "/actionchoices")
+                    }
+                });
+            }
+        }
+
+        function getchoice_(actionchoice_id) {
+            $("#subchoice-edit").html('');
+            $("#subchoices-select-list").html('');
+            $("#dialog-subchoices-actionchoice_name").html('');
+            $("#dialog-subchoices-actionchoice_id").val('');
+            
+            if (actionchoice_id === "0") {
+                $("#choice-edit").html('');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: '/dialogtools/api/v1/actionchoice/' + actionchoice_id,
+                    success: function (response) {
+                        response=response[0];
+                        var html = `
+                            <form action="/dialogtools/api/v1/actionchoice/" id="editchoice-form">
+                                <input class="form-control" type="hidden" name="id">
+                                <input class="form-control" type="hidden" name="action_id">
+                                <div class="form-group">
+                                    <label for="name">Namn</label>
+                                    <input class="form-control" type="text" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name_en">Name</label>
+                                    <input class="form-control" type="text" name="name_en">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Beskrivning</label>
+                                    <input class="form-control" type="text" name="description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description_en">Description</label>
+                                    <input class="form-control" type="text" name="description_en">
+                                </div>
+                                <!--div class="form-group">
+                                    <label for="name">Typ</label>
+                                    <input class="form-control" type="text" name="actionchoicetype_id">
+                                </div-->
+                                <div class="form-group">
+                                    <label for="actionchoicetype_id">Typ</label>
+                                    <select id="actionchoicetype_id" name="actionchoicetype_id" class="form-select">`
+                                        actionchoicetypes.forEach(type => {
+                                                html += `<option ${type.id==response.actionchoicetype_id ? 'selected' : ''} value="${type.id}">${type.type}</option>`
+                                            })
+                            html += `</select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image_id">Bild</label>
+                                    <select id="image_id" name="image_id" class="form-select">`
+                                            images.forEach(image => {
+                                                html += `<option ${image.id==response.image_id ? 'selected' : ''} value="${image.id}">${image.name}</option>`
+                                            })
+                            html += `</select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sortorder">Sortering</label>
+                                    <input class="form-control" type="text" name="sortorder">
+                                </div>
+                                <button type="button" class="btn btn-primary float-right" onclick="db_update(this, 'editchoice-form', 'PUT', 'choices-select-list', '/dialogtools/api/v1/action/parentid/actionchoices', true, 'action_id', 'dialog-choices-action_id')" id="btnUpdateActionChoiceSubmit">Update</button>
+                                <button type="button" class="btn btn-danger float-right" onclick="db_delete(this, 'editchoice-form', 'DELETE', 'choices-select-list', '/dialogtools/api/v1/action/parentid/actionchoices', 'choice-edit', true, 'action_id', 'dialog-choices-action_id')" id="btnDeleteActionChoiceSubmit">Delete</button>
+                            </form>
+                        `
+                        $('#choice-edit').html(html);
+                        $("#editchoice-form [name=\"id\"]").val(response.id);
+                        $("#editchoice-form [name=\"action_id\"]").val(response.action_id);
+                        $("#editchoice-form [name=\"actionchoicetype_id\"]").val(response.actionchoicetype_id);
+                        $("#editchoice-form [name=\"name\"]").val(response.name);
+                        $("#editchoice-form [name=\"name_en\"]").val(response.name_en);
+                        $("#editchoice-form [name=\"description\"]").val(response.description);
+                        $("#editchoice-form [name=\"description_en\"]").val(response.description_en);
+                        $("#editchoice-form [name=\"image_id\"]").val(response.image_id);
+                        $("#editchoice-form [name=\"sortorder\"]").val(response.sortorder);
+
+                        $("#dialog-subchoices-actionchoice_id").val(actionchoice_id);
+                        $("#dialog-subchoices-actionchoice_name").html(response.name)
+                        getselectcontent("subchoices-select-list", "/dialogtools/api/v1/actionchoice/" + actionchoice_id + "/subactionchoices")
+                    }
+                });
+            }
+        }
+
+        function getsubchoice_(subactionchoice_id) {
+            if (subactionchoice_id === "0") {
+                $("#subchoice-edit").html('');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: '/dialogtools/api/v1/subactionchoice/' + subactionchoice_id,
+                    success: function (response) {
+                        response=response[0];
+                        var html = `
+                            <form action="/dialogtools/api/v1/subactionchoice/" id="editsubchoice-form">
+                                <input class="form-control" type="hidden" name="id">
+                                <input class="form-control" type="hidden" name="actionchoice_id">
+                                <!--div class="form-select">
+                                    <div class="select-wrapper">
+                                        <select id="action-event_id" class="form-control">
+                                        
+                                        </select>
+                                    </div>
+                                </div-->
+                                <div class="form-group">
+                                    <label for="name">Namn</label>
+                                    <input class="form-control" type="text" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name_en">Name</label>
+                                    <input class="form-control" type="text" name="name_en">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Beskrivning</label>
+                                    <input class="form-control" type="text" name="description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description_en">Description</label>
+                                    <input class="form-control" type="text" name="description_en">
+                                </div>
+                                <div class="form-group">
+                                    <label for="actionchoicetype_id">Typ</label>
+                                    <select id="actionchoicetype_id" name="actionchoicetype_id" class="form-select">`
+                                        actionchoicetypes.forEach(type => {
+                                                html += `<option ${type.id==response.actionchoicetype_id ? 'selected' : ''} value="${type.id}">${type.type}</option>`
+                                            })
+                            html += `</select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image_id">Bild</label>
+                                    <select id="image_id" name="image_id" class="form-select">`
+                                            images.forEach(image => {
+                                                html += `<option ${image.id==response.image_id ? 'selected' : ''} value="${image.id}">${image.name}</option>`
+                                            })
+                            html += `</select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sortorder">Sortering</label>
+                                    <input class="form-control" type="text" name="sortorder">
+                                </div>
+                                <button type="button" class="btn btn-primary float-right" onclick="db_update(this, 'editsubchoice-form', 'PUT', 'subchoices-select-list', '/dialogtools/api/v1/actionchoice/parentid/subactionchoices', true, 'actionchoice_id', 'dialog-subchoices-actionchoice_id')" id="btnUpdateSubActionChoiceSubmit">Update</button>
+                                <button type="button" class="btn btn-danger float-right" onclick="db_delete(this, 'editsubchoice-form', 'DELETE', 'subchoices-select-list', '/dialogtools/api/v1/actionchoice/parentid/subactionchoices', 'subchoice-edit', true, 'actionchoice_id', 'dialog-subchoices-actionchoice_id')" id="btnDeleteSubActionChoiceSubmit">Delete</button>
+                            </form>
+                        `
+                        $('#subchoice-edit').html(html);
+                        $("#editsubchoice-form [name=\"id\"]").val(response.id);
+                        $("#editsubchoice-form [name=\"actionchoice_id\"]").val(response.actionchoice_id);
+                        $("#editsubchoice-form [name=\"actionchoicetype_id\"]").val(response.actionchoicetype_id);
+                        $("#editsubchoice-form [name=\"name\"]").val(response.name);
+                        $("#editsubchoice-form [name=\"name_en\"]").val(response.name_en);
+                        $("#editsubchoice-form [name=\"description\"]").val(response.description);
+                        $("#editsubchoice-form [name=\"description_en\"]").val(response.description_en);
+                        $("#editsubchoice-form [name=\"image_id\"]").val(response.image_id);
+                        $("#editsubchoice-form [name=\"sortorder\"]").val(response.sortorder);
+                    }
+                });
+            }
+        }
+        
+        function db_create(thiz, formselector, requesttype, selectlistselector, selectlisturl, modalselector, hasparentid, parentid_name, parentid_selector ) {
+            var $this           = $(thiz); 
+            var $caption        = $this.html();
+            var form            = "#" + formselector;
+            var formData        = $(form).serializeArray();
+            var route           = $(form).attr('action');
+            if (hasparentid==true) {
+                selectlisturl = selectlisturl.replace("parentid", $("#" + parentid_selector).val());
+                formData.push({name: parentid_name, value: $("#" + parentid_selector).val()});
+            }
+            $.ajax({
+                type: requesttype,
+                url: route,
+                data: formData,
+                beforeSend: function () {
+                    $this.attr('disabled', true).html("Processing...");
+                },
+                success: function (response) {
+                    $this.attr('disabled', false).html($caption);
+                    getselectcontent(selectlistselector, selectlisturl)
+
+                    alert(response);
+                    resetForm(form);
+                    $('#' + modalselector).modal('toggle');
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+        function db_update(thiz, formselector, requesttype, selectlistselector, selectlisturl, hasparentid, parentid_name, parentid_selector) {
+            var $this           = $(thiz);
+            var $caption        = $this.html();
+            //var form            = "#editevent-form";
+            var form            = "#" + formselector;
+            var formData        = $(form).serializeArray();
+            var route           = $(form).attr('action');
+
+            if (hasparentid==true) {
+                selectlisturl = selectlisturl.replace("parentid", $("#" + parentid_selector).val());
+            }
+
+            $.ajax({
+                type: requesttype,
+                url: route + formData[0].value,
+                data: formData,
+                beforeSend: function () {
+                    $this.attr('disabled', true).html("Processing...");
+                },
+                success: function (response) {
+                    $this.attr('disabled', false).html($caption);
+                    //getselectcontent(selectlistselector, selectlisturl)
+                    alert(response);
+                    //$(form).html('')
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+        function db_delete(thiz, formselector, requesttype, selectlistselector, selectlisturl, formparentselector, hasparentid, parentid_name, parentid_selector) {
+            var $this = $(thiz);
+            var $caption = $this.html();
+            //var form = "#editevent-form";
+            var form            = "#" + formselector;
+            var formData = $(form).serializeArray();
+            var route = $(form).attr('action');
+
+            if (hasparentid==true) {
+                selectlisturl = selectlisturl.replace("parentid", $("#" + parentid_selector).val());
+            }
+
+            $.ajax({
+                type: requesttype,
+                url: route + formData[0].value,
+                beforeSend: function () {
+                    $this.attr('disabled', true).html("Processing...");
+                },
+                success: function (response) {
+                    $this.attr('disabled', false).html($caption);
+                    $("#" + formparentselector).html('');
+                    getselectcontent(selectlistselector, selectlisturl)
+                    alert(response);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+
+        function deleteevent(thiz) {
+            var $this = $(thiz);
+            var $caption = $this.html();
+            var form = "#editevent-form";
+            var formData = $(form).serializeArray();
+            var route = $(form).attr('action');
+            $.ajax({
+                type: "DELETE",
+                url: route + formData[0].value,
+                beforeSend: function () {
+                    $this.attr('disabled', true).html("Processing...");
+                },
+                success: function (response) {
+                    $this.attr('disabled', false).html($caption);
+                    $("#event-edit").html('');
+                    getselectcontent("events-select-list", "/dialogtools/api/v1/events")
+                    alert(response);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+        function deleteaction(thiz) {
+            var $this = $(thiz);
+            var $caption = $this.html();
+            var form = "#editaction-form";
+            var formData = $(form).serializeArray();
+            var route = $(form).attr('action');
+            $.ajax({
+                type: "DELETE",
+                url: route + formData[0].value,
+                beforeSend: function () {
+                    $this.attr('disabled', true).html("Processing...");
+                },
+                success: function (response) {
+                    $this.attr('disabled', false).html($caption);
+                    $("#action-edit").html('');
+                    alert(response);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+        function deletechoice(thiz) {
+            var $this = $(thiz);
+            var $caption = $this.html();
+            var form = "#editchoice-form";
+            var formData = $(form).serializeArray();
+            var route = $(form).attr('action');
+            $.ajax({
+                type: "DELETE",
+                url: route + formData[0].value,
+                beforeSend: function () {
+                    $this.attr('disabled', true).html("Processing...");
+                },
+                success: function (response) {
+                    $this.attr('disabled', false).html($caption);
+                    $("#choice-edit").html('');
+                    alert(response);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+        function OnColorChanged(selectedColor, input) {
+            input.value = selectedColor
+        }
+        
+        function logout() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onload = function () {
+                    if (xhttp.status == 401) {  
+                    }
+                    location.href = "/dialogtools/admin"
+                };
+                xhttp.open("POST", "/dialogtools/api/v1/logout", true);
+                xhttp.setRequestHeader('Content-Type', 'application/json');
+                xhttp.send();
+            }
+    </script>
+</html>

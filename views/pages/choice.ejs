@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="<%= choicedata.language%>">
+<head>
+    <%- include('../partials/choiceshead'); %>
+</head>
+
+<body>
+    <!-- bakgrundsbild -->
+    <!--div style="width:100%">
+        <img id="map" src="/dialogtools/images/wintersun.jpg" />
+    </div-->
+    <div id="errorPlaceholder"></div>
+    <!-- Language -->
+    <div id="lang" class="title">
+        <span onclick="changelang()"><%- choicedata.language =='sv' ? choicedata.labels.englishText_en : choicedata.labels.swedishText_sv %></span>
+    </div>
+    <div id="wrapper">
+        <%let event%>
+        <% event = choicedata.event %>
+        <% choicedata.language =='sv' ? eventname = choicedata.event.name : eventname = choicedata.event.name_en%>
+        <% choicedata.language =='sv' ? eventdescription = choicedata.event.description : eventdescription = choicedata.event.description_en %>
+        <!-- Caption -->
+        <div id="caption">
+          <div id="maincaption" class="title">
+            <%= eventname%>
+          </div>
+          <div id="subcaption" class="title">
+            <%= eventdescription%>
+          </div>
+        </div>
+        <!-- Category Labels -->
+        <div id="labelwrapper">
+            <div id="circlelabels">
+            <%for (const action_ of choicedata.event.actions) { %>
+                <!-- Cirklar -->
+                <!--div class="circle-label circle-text categoryLabel shadow clickable" id="Label<%=action_.id%>" name="<%=action_.id%>" onclick="startSession('<%=action_.id%>')">
+                    <span class="inner-text center-align"><%- choicedata.language =='sv' ? action_.description :action_.description_en %></span>
+                </div-->
+
+                <!-- Hjärtan -->
+                <div class="heartcontainer" id="Label<%=action_.id%>" name="<%=action_.id%>" onclick="startSession('<%=action_.id%>')">
+                    <i class="fa <%=choicedata.labeltype%>" aria-hidden="true">
+                        <div class="text"><%- choicedata.language =='sv' ? action_.description :action_.description_en %></div>
+                    </i>
+                </div>
+                <!--div class="heartcontainer">
+                    <div class="heart" id="Label<%=action_.id%>" name="<%=action_.id%>" onclick="startSession('<%=action_.id%>')">
+                        <span class="text"><%- choicedata.language =='sv' ? action_.description :action_.description_en %></span>
+                    </div>
+                </div-->
+            <%} %>
+            </div>
+        </div>
+        <!-- Modals -->
+        <div class="dialog_modal largeModal shadow hide" id="checklistModal">
+            <div id="checklistHeader">
+                <img id="checklistLogo" class="shadow" src="" width="150" height="150" draggable="false" />
+                <div id="checklistHeaderText">
+                    <div id="checklistPrompt" class="title frontTitle">
+                    </div>
+                    <div id="checklistInstruction1" class="instruction">
+                        <%- choicedata.language =='sv' ? choicedata.labels.instruction1_sv : choicedata.labels.instruction1_en %>
+                    </div>
+                    <div id="checklistInstruction2" class="instruction">
+                        <%- choicedata.language =='sv' ? choicedata.labels.instruction2_sv : choicedata.labels.instruction2_en %>
+                    </div>
+                </div>
+            </div>
+            <div id="checklistBody">
+                <div id="checklistContainer">
+                </div>
+                <!--div id="checklistSeparator">
+                </div-->
+                <div id="checklistlearnMoreText" class="body">
+                </div>
+            </div>
+            <div class="closeModalButton heartclosebutton">
+                <i class="fa fa-heart" aria-hidden="true">
+                    <!--img src="/dialogtools/images/dismiss_icon.png" width="30" height="30" draggable="false"-->
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </i>
+            </div>
+            <!--div class="closeModalButton clickable shadow">
+                <img src="/dialogtools/images/dismiss_icon.png" width="30" height="30" draggable="false" />
+            </div-->
+            <div id="submitActionButton" class="heartcontinuebutton">
+                <i class="fa fa-heart" aria-hidden="true">
+                    <div class="text"><%- choicedata.language =='sv' ? choicedata.labels.submitActionButtonText_sv : choicedata.labels.submitActionButtonText_en%></div>
+                </i>
+            </div>
+            <!--div id="submitActionButton" class="hide buttonheart"><div class="text"><%- choicedata.language =='sv' ? choicedata.labels.submitActionButtonText_sv : choicedata.labels.submitActionButtonText_en%></div>
+            </div-->
+        </div>
+
+        <div class="dialog_modal largeModal shadow hide" id="confirmationModal">
+            <div id="confirmationContainer">
+                <div id="confirmationTitle" class="title">
+                    <%- choicedata.language =='sv' ? choicedata.labels.confirmationSynonyms_sv[Math.floor(Math.random() * choicedata.labels.confirmationSynonyms_sv.length)] : choicedata.labels.confirmationSynonyms_en[Math.floor(Math.random() * choicedata.labels.confirmationSynonyms_en.length)]%>
+                </div>
+                <!--div id="confirmationSubtitle" class="title">
+                    <%- choicedata.language =='sv' ? choicedata.labels.confirmationSubtitle_sv : choicedata.labels.confirmationSubtitle_en%>
+                    <span id="confirmationAction"></span>
+                </div-->
+                <!--div id="confirmationEmailQuestion">
+                <%- choicedata.language =='sv' ? choicedata.labels.confirmationEmailQuestion_sv : choicedata.labels.confirmationEmailQuestion_en%>
+                </div-->
+                <div id="emailPrompt">
+                    <%- choicedata.language =='sv' ? choicedata.labels.emailPrompt_sv : choicedata.labels.emailPrompt_en%>
+                </div>
+                <div id="confirmationEmailQuestionButtons">
+                    <div id="yescontact">
+                        <div id='emailTextbox'>
+                            <textarea placeholder="<%- choicedata.language =='sv' ? choicedata.labels.confirmationEmailTextboxPlaceholder_sv : choicedata.labels.confirmationEmailTextboxPlaceholder_en%>" id="write" rows="1" resizeable="no"></textarea>
+                        </div>
+                        <button id="confirmationEmailQuestionYesButton" class="btn btn-success"><i class="pulse fa fa-heart" aria-hidden="true"></i> <%- choicedata.language =='sv' ? choicedata.labels.confirmationEmailQuestionYesButton_sv[Math.floor(Math.random() * choicedata.labels.confirmationEmailQuestionYesButton_sv.length)] : choicedata.labels.confirmationEmailQuestionYesButton_en[Math.floor(Math.random() * choicedata.labels.confirmationEmailQuestionYesButton_en.length)]%></button>
+                        <!--div id="confirmationEmailQuestionYesButton" class="">
+                            <div id="" class="heartemailmebutton">
+                                <i class="pulse fas fa-heart" aria-hidden="true">
+                                    <div class="text"><%- choicedata.language =='sv' ? choicedata.labels.confirmationEmailQuestionYesButton_sv[Math.floor(Math.random() * choicedata.labels.confirmationEmailQuestionYesButton_sv.length)] : choicedata.labels.confirmationEmailQuestionYesButton_en[Math.floor(Math.random() * choicedata.labels.confirmationEmailQuestionYesButton_en.length)]%></div>
+                                </i>
+                            </div>
+                        </div-->
+                    </div>
+                    <button id="confirmationEmailQuestionNoButton" class="btn btn-primary"><i class="fas fa-heart-broken" aria-hidden="true"></i> <%- choicedata.language =='sv' ? choicedata.labels.breakuplines_sv[Math.floor(Math.random() * choicedata.labels.breakuplines_sv.length)] : choicedata.labels.breakuplines_en[Math.floor(Math.random() * choicedata.labels.breakuplines_en.length)]%></button>
+                    <!--div id="confirmationEmailQuestionNoButton" class="">
+                        <div id="" class="heartnothanksbutton">
+                            <i class="fas fa-heart-broken" aria-hidden="true">
+                                <div class="text"><%- choicedata.language =='sv' ? choicedata.labels.breakuplines_sv[Math.floor(Math.random() * choicedata.labels.breakuplines_sv.length)] : choicedata.labels.breakuplines_en[Math.floor(Math.random() * choicedata.labels.breakuplines_en.length)]%></div>
+                            </i>
+                        </div>
+                    </div-->
+                </div>
+                <div id="confirmationEmailPrivacyStatement" class="body">
+                <%- choicedata.language =='sv' ? choicedata.labels.confirmationEmailPrivacyStatement_sv : choicedata.labels.confirmationEmailPrivacyStatement_en%>
+                </div>
+            </div>
+            <!--div class="closeModalButton clickable shadow">
+              <img src="/dialogtools/images/dismiss_icon.png" width="30" height="30" draggable="false" />
+            </div-->
+        </div>
+
+        <!--div class="dialog_modal largeModal shadow hide" id="emailModal">
+            <div id="checklistHeaderText">
+                <div id="checklistEmailInstruction" class="instruction">
+                    <%- choicedata.language =='sv' ? choicedata.labels.emailinstruction_sv : choicedata.labels.emailinstruction_en %>
+                </div>
+            </div>
+            <div id="container">
+              <div id='emailTextbox'>
+                <textarea id="write" rows="1" resizeable="no"></textarea>
+              </div>
+              <div id="contactme">
+                <input onclick="contacttoggle()" class="" type="checkbox" id="contactmecheckbox" name="contactmecheckbox" value=""/>
+                <label for="contactmecheckbox">
+                    <img class="unchecked" id="contactmecheckboxUnchecked" src="/dialogtools/images/unchecked_box.png"/>
+                    <img class="checked" id="contactmecheckboxChecked" src="/dialogtools/images/checked_box.png"/>
+                    <div class="actionItemBody">
+                        <div class="actionItemName title">
+                            <%- choicedata.language =='sv' ? 'Kontakta mig(GDPR bla bla?)' : 'Contact me(GDPR bla bla?)'%>
+                        </div>
+                    </div>
+                </label>
+                <div id="contactmefields" class="hide">
+                    <label for="contactName">Namn</label>
+                    <input type="text" id="contactName">
+                    <label for="contactOther">Annat</label>
+                    <input type="text" id="contactOther">
+                </div>
+              </div>
+              <% if (choicedata.query.kiosk=="true") {%>
+              <ul id="keyboard">
+                  <li class="invisibleKey" style="width: 2.5px"></li>
+                  <li class="email firstitem">@gmail.com</li>
+                  <li class="email">@yahoo.com</li>
+                  <li class="email">@hotmail.com</li>
+                  <li class="email">@kth.se</li>
+                  <li class="symbol"><span class="off">@</span><span class="on">@</span></li>
+                  <li class="email lastitem">.se</li>
+                  <li class="invisibleKey 1" style="width: 0px"></li>
+                  <li class="symbol firstitem"><span class="off">1</span><span class="on">!</span></li>
+                  <li class="symbol"><span class="off">2</span><span class="on">@</span></li>
+                  <li class="symbol"><span class="off">3</span><span class="on">#</span></li>
+                  <li class="symbol"><span class="off">4</span><span class="on">$</span></li>
+                  <li class="symbol"><span class="off">5</span><span class="on">%</span></li>
+                  <li class="symbol"><span class="off">6</span><span class="on">^</span></li>
+                  <li class="symbol"><span class="off">7</span><span class="on">&amp;</span></li>
+                  <li class="symbol"><span class="off">8</span><span class="on">*</span></li>
+                  <li class="symbol"><span class="off">9</span><span class="on">(</span></li>
+                  <li class="symbol"><span class="off">0</span><span class="on">)</span></li>
+                  <li class="symbol"><span class="off">_</span><span class="on">~</span></li>
+                  <li class="symbol"><span class="off">-</span><span class="on">_</span></li>
+                  <li class="symbol"><span class="off">=</span><span class="on">+</span></li>
+                  <li class="delete lastitem">⌫</li>
+                  <li class="invisibleKey" style="width: 56px"></li>
+                  <li class="letter">q</li>
+                  <li class="letter">w</li>
+                  <li class="letter">e</li>
+                  <li class="letter">r</li>
+                  <li class="letter">t</li>
+                  <li class="letter">y</li>
+                  <li class="letter">u</li>
+                  <li class="letter">i</li>
+                  <li class="letter">o</li>
+                  <li class="letter">p</li>
+                  <li class="symbol"><span class="off">[</span><span class="on">{</span></li>
+                  <li class="symbol"><span class="off">]</span><span class="on">}</span></li>
+                  <li class="symbol lastitem"><span class="off">\</span><span class="on">|</span></li>
+                  <li class="invisibleKey" style="width: 67.5px"></li>
+                  <li class="capslock">caps lock</li>
+                  <li class="letter">a</li>
+                  <li class="letter">s</li>
+                  <li class="letter">d</li>
+                  <li class="letter">f</li>
+                  <li class="letter">g</li>
+                  <li class="letter">h</li>
+                  <li class="letter">j</li>
+                  <li class="letter">k</li>
+                  <li class="letter">l</li>
+                  <li class="symbol"><span class="off">;</span><span class="on">:</span></li>
+                  <li class="symbol lastitem"><span class="off">'</span><span class="on">&quot;</span></li>
+                  <li class="invisibleKey" style="width: 138.5px"></li>
+                  <li class="left-shift">shift</li>
+                  <li class="letter">z</li>
+                  <li class="letter">x</li>
+                  <li class="letter">c</li>
+                  <li class="letter">v</li>
+                  <li class="letter">b</li>
+                  <li class="letter">n</li>
+                  <li class="letter">m</li>
+                  <li class="symbol"><span class="off">,</span><span class="on">&lt;</span></li>
+                  <li class="symbol"><span class="off">.</span><span class="on">&gt;</span></li>
+                  <li class="symbol lastitem"><span class="off">/</span><span class="on">?</span></li>
+                  <li class="invisibleKey" style="width: 268px"></li>
+                  <li class="space lastitem">&nbsp;</li>
+              </ul>
+              <% }%>
+            </div>
+            <div class="closeModalButton clickable shadow">
+              <img src="/dialogtools/images/dismiss_icon.png" width="30" height="30" draggable="false" />
+            </div>
+            <div id="submitEmail" class="clickable shadow hide"><%- choicedata.language =='sv' ? choicedata.labels.submitActionButtonText_sv : choicedata.labels.submitActionButtonText_en%></div>
+        </div-->
+
+        <div class="dialog_modal shadow hide" id="thanksModal">
+            <div class="closeModalButton heartclosebutton">
+                <i class="fa fa-heart" aria-hidden="true">
+                    <!--img src="/dialogtools/images/dismiss_icon.png" width="30" height="30" draggable="false"-->
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </i>
+            </div>
+            <div id="thanksText" class="title"><%- choicedata.language =='sv' ? choicedata.labels.thanksText_sv : choicedata.labels.thanksText_en%></div>
+        </div>
+
+        <div class="modal fade" id="choiceModal" tabindex="-1" aria-labelledby="choiceModalLabel" aria-hidden="true">
+        </div>
+    </div><!-- End of Wrapper-->
+</body>
+    <%- include('../partials/choicesscript'); %>
+    <script>
+
+        //////////////////////// EVENT EMITTERS ////////////////////////
+
+        function pledgeDone(data) {
+            animateTheVote();
+        }
+
+        function reminderDone(data) {
+        }
+
+        function pledge(action_id) {
+
+            // 
+            SESSION_USER_CHOICE = {};
+            //skapa ett unikt id för att samla ihop alla svar för sessionen
+            uuid = uuidv4();
+
+            //hitta rätt action
+            let actionObject = actions.find(action => action.id === parseInt(action_id))
+
+            //Hämta gjorda val(användares check på actionchoice_id)
+            let session_choices = []
+            let session_subchoices = []
+            let session_textareas = []
+            let school;
+            let user_type;
+
+            user_type = $('input[name="usertype"]:checked').val();
+
+            if (typeof user_type === "undefined") {
+                user_type = "";
+            }
+
+            school = $("#school").val();
+
+            if (typeof school === "undefined") {
+                school = "";
+            }
+
+            $(".mainactioncheckbox")
+                .each(function () {
+                    if (this.checked) {
+                        session_choices.push(this.value)
+                    }
+                });
+
+            //Spara endast om mainaction är checked
+            $(".subactioncheckbox")
+                .each(function () {
+                    if($(this).parent().parent().parent().find('.mainactioncheckbox').prop('checked')) {
+                        if (this.checked) {
+                            session_subchoices.push(this.value)
+                        }
+                    }
+                });
+
+            //Spara endast om mainaction är checked
+            $(".usermessages")
+                .each(function () {
+                    if($(this).parent().parent().parent().find('.mainactioncheckbox').prop('checked')) {
+                        session_textareas.push({subchoice_id: $(this).find("input").val(), message: $(this).find("textarea").val()})
+                    }
+                });
+            
+            body = {
+                "event_id": '<%- JSON.stringify(choicedata.event.id) %>',
+                "action_id": action_id,
+                "session_choices": session_choices,
+                "session_subchoices": session_subchoices,
+                "session_textareas": session_textareas,
+                "usertype": user_type, 
+                "school": school,
+                "computerLocation":"Right",
+                "uuid": uuid
+            }
+
+            SESSION_USER_CHOICE = body;
+
+            //verify at least one choice made
+            let labels = JSON.parse('<%- JSON.stringify(choicedata.labels) %>')
+            if (session_choices.length > 0) {
+                //Mandatory fields
+                language = getcurrentlangfromHTML_Tag()
+                $('#checklistPrompt').html(language == 'sv' ? actionObject.description : actionObject.description_en);
+                if (school === ""|| user_type ==="" ) {
+                    alert(language == 'sv' ? labels.requireschoolText_sv : labels.requireschoolText_en, 'danger', 'errorPlaceholder' );
+                    $("#submitActionButton").removeClass('hide');
+                } else {
+                    
+                    $.post({
+                        url: '/dialogtools/api/v1/choice',
+                        headers: { 'x-api-key': secret },
+                        data: body
+                    })
+                    .always(pledgeDone)
+                    .done(function(data) {
+                    })
+                    .fail( function(data) {
+                        alert( JSON.stringify(data['responseText']), 'danger', 'errorPlaceholder' );
+                    });
+                } 
+            }
+            else {
+                alert(language == 'sv' ? labels.requireselectionText_sv : labels.requireselectionText_en, 'danger', 'errorPlaceholder' );
+                $("#submitActionButton").removeClass('hide');
+            }
+            // 200 it worked
+            // anything else it didn't
+            // 500 server error out
+            // 400 bad request
+            // 401 forbidden
+            // 404 not found
+        }
+
+        function reminder(choiceid, email, contactme, name, other) {
+            // All the data you need is the emailadress and the subcategory
+            //contactme is always true at the moment
+            contactme = true;
+            body = JSON.stringify({
+                email: email,
+                contactme: contactme,
+                name: name,
+                other: other,
+                choiceid: choiceid,
+                lang: getcurrentlangfromHTML_Tag(),
+                session_user_choice : SESSION_USER_CHOICE
+            });
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/dialogtools/api/v1/reminder',
+                headers: { 'x-api-key': secret },
+                contentType: 'application/json',
+                data: body
+            })
+            .always(reminderDone);
+        }
+
+        //////////////////////// GLOBAL VARS ///////////////////////
+        var SESSION_USER_CHOICE
+        var heartrain;
+        var heartremove;
+        var THANKS_TIMEOUT;
+        var SYNONYM_INDEX;
+        var SESSION_CATEGORY; // travels, clothing, purchases, food, living
+        var SESSION_ACTION; // 0, 1, 2
+        //var categories
+        var actions
+        var secret = 'kg897n987n98n)!dskjlksjfd?435mnckjsbsekef-_klknbhjhsef';
+
+        var idleTime = 0;
+
+        let language = "";
+
+        function getQuerystringparam (querystringparam) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const value = urlParams.get(querystringparam)
+            return value
+        }
+        
+        function initlang() {
+            $("#confirmationEmailQuestionNoButton").bind('click', function() {
+                showModal('thanks', {"broken": true});
+                idleTime = 0;
+            });
+
+            $("#confirmationEmailQuestionYesButton").bind('click', function() {
+                idleTime = 0;
+                let actionObject = actions.find(action => action.id === parseInt(SESSION_CATEGORY))
+                idleTime = 0;
+                var choice_id = parseInt(SESSION_CATEGORY);
+                reminder(choice_id, $('#write').val(), true, $('#contactName').val(), $('#contactOther').val());
+                //document.getElementById("contactmecheckbox").checked = false;
+                contacttoggle();
+                //document.getElementById("contactName").value = '';
+                //document.getElementById("contactOther").value = '';
+                showModal('thanks');
+                //showModal('email');
+            });
+        }
+        
+        function init() {
+
+            initlang();
+
+            heartrain = null;
+            heartremove = null;
+            THANKS_TIMEOUT = null;
+            SYNONYM_INDEX = 0;
+            SESSION_CATEGORY = null;
+            SESSION_ACTION = null;
+
+            if (getQuerystringparam('kiosk') == 'true') {
+                //Använd timeoutfunktionen för session
+            }
+            if(isDeviceiPad()) {
+            
+            } else {
+            
+            }
+
+            $(".closeModalButton").bind('click', function() {
+                idleTime = 0;
+                endSession();
+            });
+
+            $("#submitActionButton").bind('click', function() {
+                idleTime = 0;
+                $("#checklistLogo").addClass('grow');
+                $("#submitActionButton").addClass('hide');
+                $(".alert").remove()
+                pledge(SESSION_CATEGORY, SESSION_ACTION);
+            });
+
+            $("#submitEmail").click(function() {
+                let actionObject = actions.find(action => action.id === parseInt(SESSION_CATEGORY))
+                idleTime = 0;
+                var choice_id = parseInt(SESSION_CATEGORY);
+                reminder(choice_id, $('#write').val(), true, $('#contactName').val(), $('#contactOther').val());
+                //document.getElementById("contactmecheckbox").checked = false;
+                contacttoggle();
+                //document.getElementById("contactName").value = '';
+                //document.getElementById("contactOther").value = '';
+                showModal('thanks');
+            });
+            $('#write').html('');
+            $('#write').val('');
+        }
+
+        // Code for keyboard from Vasili
+        // @ https://code.tutsplus.com/tutorials/creating-a-keyboard-with-css-and-jquery--net-5774
+        function initKeyboard() {
+            $(function(){
+                $('#write').bind('input propertychange', function() {
+
+                    //$("#submitEmail").hide();
+                    $("#submitEmail").addClass('hide');
+
+                    if(this.value.length){
+                        //$("#submitEmail").show();
+                        $("#submitEmail").removeClass('hide');
+                    }
+                });
+                var $write = $('#write'),
+                shift = false,
+                capslock = false;
+                $('.capslock').removeClass('highlighted');
+
+                $('#keyboard li').click( function() {
+                    idleTime = 0;
+                    var $this = $(this);
+                    var character = $this.html();
+
+                    // Shift keys
+                    if ($this.hasClass('left-shift')) {
+                        $('.letter').addClass('uppercase');
+                        $('.symbol span').toggle();
+                        shift = (shift === true) ? false : true;
+                        capslock = false;
+                        $('.capslock').removeClass('highlighted');
+                        $this.addClass('highlighted');
+                        return false;
+                    }
+
+                    // Caps lock
+                    if ($this.hasClass('capslock')) {
+                        $('.letter').toggleClass('uppercase');
+                        if (capslock) {
+                            capslock = false;
+                            $('.capslock').removeClass('highlighted');
+                        } else {
+                            capslock = true;
+                            $('.capslock').addClass('highlighted');
+                        }
+                        return false;
+                    }
+
+                    // Delete
+                    if ($this.hasClass('delete')) {
+                        var html = $write.html();
+                        var val = $write.val();
+                        $write.html(html.substr(0, html.length - 1));
+                        $write.val(val.substr(0, val.length - 1));
+                        if ($write.val().length === 0) {
+                            $("#submitEmail").addClass('hide');
+                        }
+                        return false;
+                    }
+
+                    // Special characters
+                    if ($this.hasClass('symbol')) character = $('span:visible', $this).html();
+                    if ($this.hasClass('space')) character = ' ';
+
+                    // Uppercase letter
+                    if ($this.hasClass('uppercase')) character = character.toUpperCase();
+
+                    // Remove shift once a key is clicked.
+                    if (shift === true) {
+                        $('.symbol span').toggle();
+                        if (capslock === false) $('.letter').toggleClass('uppercase');
+                        shift = false;
+                        $('.left-shift').removeClass('highlighted');
+                    }
+
+                    // Add the character
+                    $write.html($write.html() + character);
+                    $write.val($write.val() + character);
+                    if ($write.val().length > 0) {
+                        $("#submitEmail").removeClass('hide');
+                    } else {
+                        $("#submitEmail").addClass('hide');
+                    }
+                });
+            });
+        }
+
+        function startSession(action) {
+            //Clear user choice
+            SESSION_USER_CHOICE = {}
+            idleTime = 0;
+            // Hide lure screen labels, prompt, and click events
+            $("#caption").addClass( "hide" );
+            $("#lang").addClass( "hide" );
+            $(".categoryLabel").addClass( "hide" );
+            $(".heart").addClass( "hide" );
+            $(".heartcontainer").addClass( "hide" );
+            $("#labelwrapper").addClass( "hide" );
+            $(".categoryLabel").unbind( "click" );
+            $(".category").unbind( "click" );
+            $("#map").css("opacity", 0.5);
+
+            // Store category selection
+            SESSION_CATEGORY = action;
+            // Present checklist modal
+            showModal('checklist');
+        }
+
+        function endSession(options = {}) {
+
+            // Close modals
+            $('.dialog_modal').addClass('hide');
+
+            // Put logo back
+            $("#checklistLogo").removeClass('voted');
+            $("#checklistLogo").removeClass('grow');
+
+            // Reset lure screen
+            $(".category").bind('click', function() {
+                idleTime = 0;
+                startSession(($(this).attr('name')));
+            });
+            $(".categoryLabel").bind('click', function() {
+                idleTime = 0;
+                startSession(($(this).attr('name')));
+            });
+            $("#lang").removeClass( "hide" );
+            $(".categoryLabel").removeClass( "hide" );
+            $(".heart").removeClass( "hide" );
+            $(".heartcontainer").removeClass( "hide" );
+            $("#labelwrapper").removeClass( "hide" );
+            $("#caption").removeClass( "hide" );
+            $("#map").css("opacity", 1);
+
+            // Clear thanks timeout
+            if (THANKS_TIMEOUT !== null) {
+                window.clearTimeout(THANKS_TIMEOUT);
+                window.clearInterval(heartrain);
+                window.clearInterval(heartremove);
+                var heartclass = "";
+                if (options.broken) {
+                    heartclass = "rain fas fa-heart-broken";    
+                    heartclassSelector = ".rain.fas";
+                } else {
+                    heartclass = "rain fas fa-heart";
+                    heartclassSelector = ".rain.fas";
+                }
+                var heartArr = document.querySelectorAll(heartclassSelector)
+                heartArr.forEach(heart => {
+                    heart.remove();
+                });
+
+                //document.querySelectorAll(".fa-heart").style.display = "none"
+                THANKS_TIMEOUT = null;
+                heartrain = null;
+                heartremove = null;
+            }
+
+            // Clear divs, html, applied style
+            $("#checklistlearnMoreText").html('');
+            $(".itemCheckboxImage").attr('src', '/dialogtools/images/unchecked_box.png');
+            $('#write').html('');
+            $('#write').val('');
+            $("#submitActionButton").addClass('hide');
+            $(".alert").remove()
+
+            // Reset session selections
+            SESSION_EVENT = null;
+            SESSION_CATEGORY = null;
+            SESSION_ACTION = null;
+            SESSION_CHOICE = null;
+        }
+
+        //Visa respektive gränssnitt för dialogen(välja, maila, tack etc)
+        function showModal(modal, options={}) {
+            let labels = JSON.parse('<%- JSON.stringify(choicedata.labels) %>')
+            
+            let actionObject = actions.find(action => action.id === parseInt(SESSION_CATEGORY))
+
+            switch (modal) {
+
+                case 'checklist':
+                    // Populate checklist html
+                    language = getcurrentlangfromHTML_Tag()
+                    $('#checklistPrompt').html(language == 'sv' ? actionObject.description : actionObject.description_en);
+                    checklistContainer = '';
+                    for (var i = 0; i < actionObject.choices.length; i++) {
+                        checklistContainer += 
+                            `<div class="actionItem">
+                                <div class="cont-checkbox mainaction">`
+                                //Checkbox
+                                if (actionObject.choices[i].actionchoicetype_id == 1) {
+                                    checklistContainer += `
+                                    <input onclick="togglesubchoices(this)" class="mainactioncheckbox" type="checkbox" id="myCheckbox-${i}" name="myCheckbox-${i}" value="${actionObject.choices[i].id}"/>
+                                    <label for="myCheckbox-${i}">
+                                        <img class="unchecked" id="myCheckboxImageUnchecked-${i}" src="/dialogtools/images/unchecked_box.png"/>
+                                        <img class="checked" id="myCheckboxImageChecked-${i}" src="/dialogtools/images/checked_box.png"/>
+                                        <div class="actionItemBody">
+                                            <div class="actionItemName title">
+                                                ${language =='sv' ? actionObject.choices[i].name : actionObject.choices[i].name_en}
+                                            </div>
+                                        </div>
+                                    </label><!--span style="" class="showmoreinfo" type="" onclick="showmoreinfo(${i})"><i class="fa fa-info-circle"></i></span-->
+                                    <div class="actionItemText">
+                                        <div>${language =='sv' ? actionObject.choices[i].description : actionObject.choices[i].description_en}</div>
+                                    </div>
+                                    <div class="subactions hide">`
+                                    //Visa endast om mainaction är checked
+                                    for (var j = 0; j < actionObject.choices[i].subchoices.length; j++) {
+                                        //Fritext
+                                        if (actionObject.choices[i].subchoices[j].actionchoicetype_id == 4) {
+                                            checklistContainer += 
+                                        `<div class="usermessages">
+                                            <label for="myTextarea-${j}">
+                                                <div class="">
+                                                    <div class="subactionItemName">
+                                                        ${language == 'sv' ? actionObject.choices[i].subchoices[j].description : actionObject.choices[i].subchoices[j].description_en}
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <input id="subaction_id${j}" type="hidden" value="${actionObject.choices[i].subchoices[j].id}"/>
+                                            <textarea rows="3" id="myTextarea-${j}" name="myTextarea-${j}"/></textarea>
+                                        </div>`
+                                        }
+                                        //Checkbox
+                                        if (actionObject.choices[i].subchoices[j].actionchoicetype_id == 1) {
+                                            checklistContainer += 
+                                        `<div>
+                                            <input class="subactioncheckbox" type="checkbox" id="subchoiceCheckbox-${j}" name="subchoiceCheckbox-${j}" value="${actionObject.choices[i].subchoices[j].id}"/>
+                                            <label for="subchoiceCheckbox-${j}">
+                                                <img class="unchecked" id="subchoiceCheckboxImageUnchecked-${j}" src="/dialogtools/images/unchecked_box.png"/>
+                                                <img class="checked" id="subchoiceCheckboxImageChecked-${j}" src="/dialogtools/images/checked_box.png"/>
+                                                <div class="subactionItemBody">
+                                                    <div class="subactionItemName">
+                                                        ${language == 'sv' ? actionObject.choices[i].subchoices[j].name : actionObject.choices[i].subchoices[j].name_en}
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>`
+                                        }
+                                        //Radio
+                                        if (actionObject.choices[i].subchoices[j].actionchoicetype_id == 2) {
+                                            checklistContainer += 
+                                        `<div>
+                                            <input class="subchoiceRadio" type="radio" id="subchoiceRadio-${i}" name="subchoiceRadio-${i}" value="${actionObject.choices[i].subchoices[j].id}"/>
+                                            <label for="subchoiceRadio-${j}">
+                                                <div class="subactionItemBody">
+                                                    <div class="subactionItemName">
+                                                        ${language == 'sv' ? actionObject.choices[i].subchoices[j].name : actionObject.choices[i].subchoices[j].name_en}
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>`
+                                        }
+                                    }
+                                    checklistContainer += 
+                                    `</div>`
+                                }
+                                checklistContainer += 
+                                `</div>
+                            </div>`
+                    }
+                    //Användartyp och skola
+                    let usertypes = JSON.parse('<%- JSON.stringify(choicedata.usertypes) %>')
+                    checklistContainer += 
+                    `<div class="userinfo">
+                        <div>
+                            ${language == 'sv' ? labels.userinfo_sv : labels.userinfo_en}
+                        </div>
+                        <div class="mb-2">`
+                    for (var i = 0; i < usertypes.length; i++) {
+                        checklistContainer += 
+                            `<div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="usertype" id="${usertypes[i].code}" value="${usertypes[i].code}">
+                                <label class="form-check-label" for="${usertypes[i].code}">
+                                    ${language == 'sv' ? usertypes[i].description : usertypes[i].description_en}
+                                </label>
+                            </div>`
+                    }
+                    checklistContainer += 
+                        `</div>`
+
+                    let kthschools = JSON.parse('<%- JSON.stringify(choicedata.kthschools) %>')
+                    //let kthschools_en = JSON.parse('<%- JSON.stringify(choicedata.kthschools_en) %>')
+                    //let currents_kthschools = language == 'sv' ? kthschools : kthschools_en
+                    checklistContainer += 
+                        `<select id="school" class="form-select mb-2" aria-label="School">
+                            <option value="" selected>${language == 'sv' ? labels.myschoolText_sv : labels.myschoolText_en}</option>`
+                            for (var i = 0; i < kthschools.length; i++) {                        
+
+                                checklistContainer +=`<option value="${kthschools[i].code}">${language == 'sv' ? kthschools[i].name : kthschools[i].name_en}</option>`
+                            }
+                    checklistContainer +=`
+                        </select>
+                    </div>`
+
+                    $("#checklistContainer").html(checklistContainer)
+                    $("#checklistLogo").attr('src', actionObject.fullpath)
+
+                    // Show checklist modal
+                    $('#checklistModal').removeClass('hide');
+                    // Show submit button
+                    $("#submitActionButton").removeClass('hide');
+
+                    break;
+
+                case 'confirmation':
+                    // Populate confirmation html
+                    $('#confirmationAction').html(actionObject.description_en.toLowerCase());
+                    // Hide checklist and show confirmation
+                    $('#checklistModal').addClass('hide');
+                    $('#confirmationModal').removeClass('hide');
+
+                    break;
+
+                case 'email':
+                    // Hide confirmation and show email
+                    $('#confirmationModal').addClass('hide');
+                    $('#emailModal').removeClass('hide');
+
+                    break;
+
+                case 'thanks':
+                    // Hide email or confirmation modal and show thanks modal
+                    $('#emailModal').addClass('hide');
+                    $('#confirmationModal').addClass('hide');
+                    $('#thanksModal').removeClass('hide');
+
+                    // Start timeout for thanks screen
+                    //if (getQuerystringparam('kiosk') == 'true') {
+                        //Använd timeoutfunktionen för session
+                        let sessiontimeout = JSON.parse('<%- JSON.stringify(choicedata.sessiontimeout) %>')
+                        THANKS_TIMEOUT = window.setTimeout(function() { endSession(options); }, sessiontimeout)
+                        const body = document.querySelector("body");
+                        var heartclass = ""
+                        var heartclassSelector = ".rain.fas";
+                        function createHeart() {
+                            const heart = document.createElement("div");
+                            if (options.broken) {
+                                heartclass = "rain fas fa-heart-broken";    
+                            } else {
+                                var hearts = document.querySelectorAll(heartclassSelector)
+                                if ((hearts.length % 7) === 0) {
+                                    heartclass = "rain fas fa-heart blue";
+                                } else {
+                                    if ((hearts.length % 5) === 0) {
+                                        heartclass = "rain fas fa-heart white";
+                                    } else {
+                                        heartclass = "rain fas fa-heart";
+                                    }
+                                     
+                                }
+                            }
+
+                            heart.className = heartclass
+                            heart.style.left = (Math.random() * 95)+"vw";
+                            heart.style.animationDuration = (Math.random()*3)+10+"s"
+                            body.appendChild(heart);
+                        }
+                        heartrain = window.setInterval(createHeart,100);
+                        heartremove = window.setInterval(function name(params) {
+                            var heartArr = document.querySelectorAll(heartclassSelector)
+                            if (heartArr.length > 200) {
+                                heartArr[0].remove()
+                            }
+                        },100)
+                    //}
+                    
+
+                    break;
+
+                default:
+                    endSession();
+                    break;
+            }
+        }
+
+        function togglesubchoices(element) {
+            $(element).parent().find('.subactions').toggleClass('hide');
+        }
+
+        function contacttoggle() {
+            $("#contactmefields").toggleClass('hide');
+        }
+
+        function animateTheVote() {
+            //$("#checklistLogo").addClass('voted');
+            //window.setTimeout(function() {
+                showModal('confirmation');
+            //}, 3000);
+        }
+
+        function timerIncrement(ms) {
+            idleTime = idleTime + ms;
+            if (getQuerystringparam('kiosk') == 'true') {
+                //Använd timeoutfunktionen för session
+                if (idleTime > 80000) { // 80 seconds
+                    idleTime = 0;
+                    endSession();
+                }
+            }
+            
+        }
+
+        function changelang() {
+            let event = JSON.parse(`<%- JSON.stringify(choicedata.event) %>`)
+            let labels = JSON.parse(`<%- JSON.stringify(choicedata.labels) %>`)
+            let labeltype = JSON.parse(`<%- JSON.stringify(choicedata.labeltype) %>`)
+            let actions = event.actions
+            lang_ = getcurrentlangfromHTML_Tag()
+
+            //Om nuvarande språk är engelska --> byt till svenska
+            if (lang_ == 'en') {
+                $('html').attr('lang', 'sv')
+                $('#lang span').text(labels.englishText_en)
+                $('#maincaption').html(event.name)
+                $('#subcaption').html(event.description)
+                let circlelabels_html ='';
+                for (i=0; i<actions.length; i++) {
+                    circlelabels_html += `<div class="heartcontainer" id="Label${actions[i].id}" name="${actions[i].id}" onclick="startSession('${actions[i].id}')">
+                        <i class="fa ${labeltype}" aria-hidden="true">
+                            <div class="text">${actions[i].description}</div>
+                        </i>
+                    </div>`
+                }
+                $('#circlelabels').html(circlelabels_html)
+                $('#checklistPrompt').text()
+                $('#checklistInstruction1').html(labels.instruction1_sv)
+                $('#checklistInstruction2').html(labels.instruction2_sv)
+                $('#checklistEmailInstruction').html(labels.emailinstruction_sv)
+                $('#submitActionButton .text').text(labels.submitActionButtonText_sv)
+                $('#submitEmail').text(labels.submitEmailButtonText_sv)
+                $('#confirmationTitle').text(labels.thanksText_sv)
+                $('#thanksText').text(labels.thanksText_sv)
+                $('#confirmationSubtitle').html(labels.confirmationSubtitle_sv);
+                $('#confirmationEmailQuestion').html(labels.confirmationEmailQuestion_sv);
+                $('#emailPrompt').html(labels.emailPrompt_sv);
+                $('#confirmationEmailQuestionNoButton').html('<i class="pulse fas fa-heart-broken" aria-hidden="true"></i> ' + labels.breakuplines_sv[Math.floor(Math.random() * labels.breakuplines_sv.length)]);
+                $('#confirmationEmailQuestionYesButton').html('<i class="pulse fa fa-heart" aria-hidden="true"></i> ' + labels.confirmationEmailQuestionYesButton_sv[Math.floor(Math.random() * labels.confirmationEmailQuestionYesButton_sv.length)]);
+                $('#emailTextbox textarea').attr("placeholder", labels.confirmationEmailTextboxPlaceholder_sv);
+                $('#confirmationEmailPrivacyStatement').html(labels.confirmationEmailPrivacyStatement_sv);
+                $('#confirmationEmailQuestion').html(labels.confirmationEmailQuestion_sv);
+                
+            }
+            //Om nuvarande språk är svenska --> byt till engelska
+            if (lang_ == 'sv'){
+                $('html').attr('lang', 'en')
+                $('#lang span').text(labels.swedishText_sv)
+                $('#maincaption').html(event.name_en)
+                $('#subcaption').html(event.description_en)
+                let circlelabels_html ='';
+                for (i=0; i<actions.length; i++) {
+                    circlelabels_html += `<div class="heartcontainer" id="Label${actions[i].id}" name="${actions[i].id}" onclick="startSession('${actions[i].id}')">
+                        <i class="fa ${labeltype}" aria-hidden="true">
+                            <div class="text">${actions[i].description_en}</div>
+                        </i>
+                    </div>`
+                }
+                $('#circlelabels').html(circlelabels_html)
+                $('#checklistPrompt').text()
+                $('#checklistInstruction1').html(labels.instruction1_en)
+                $('#checklistInstruction2').html(labels.instruction2_en)
+                $('#checklistEmailInstruction').html(labels.emailinstruction_en)
+                $('#submitActionButton .text').text(labels.submitActionButtonText_en)
+                $('#submitEmail').text(labels.submitEmailButtonText_en)
+                $('#confirmationTitle').text(labels.thanksText_en)
+                $('#thanksText').text(labels.thanksText_en)
+                $('#confirmationSubtitle').html(labels.confirmationSubtitle_en);
+                $('#confirmationEmailQuestion').html(labels.confirmationEmailQuestion_en);
+                $('#emailPrompt').html(labels.emailPrompt_en);
+                $('#confirmationEmailQuestionNoButton').html('<i class="pulse fas fa-heart-broken" aria-hidden="true"></i> ' + labels.breakuplines_en[Math.floor(Math.random() * labels.breakuplines_en.length)]);
+                $('#confirmationEmailQuestionYesButton').html('<i class="pulse fa fa-heart" aria-hidden="true"></i> ' + labels.confirmationEmailQuestionYesButton_en[Math.floor(Math.random() * labels.confirmationEmailQuestionYesButton_en.length)]);
+                $('#emailTextbox textarea').attr("placeholder", labels.confirmationEmailTextboxPlaceholder_en);
+                $('#confirmationEmailPrivacyStatement').html(labels.confirmationEmailPrivacyStatement_en);
+                $('#confirmationEmailQuestion').html(labels.confirmationEmailQuestion_en);
+            }
+        }
+
+        function showmoreinfo(index) {
+            let actionObject = actions.find(action => action.id === parseInt(SESSION_CATEGORY))
+            $("#checklistlearnMoreText").html('<img src="' + actionObject.choices[index].fullpath + '" class="learnMoreImage"/>');
+        }
+
+        $(document).ready(function() {            
+            //Definiera javascriptobject med data från EJS
+            actions = JSON.parse(`<%- JSON.stringify(choicedata.event.actions) %>`)
+            var confirmationSynonyms;
+        
+            init();
+            initKeyboard();
+
+            // Listener to tell when someone has walked away from the app
+            // Check every 5 seconds
+            // Increment the idle time counter every minute.
+            var idleInterval = setInterval(function() {
+                timerIncrement(5000);
+            }, 5000);
+        });
+
+        // Help Functions
+
+        function isDeviceiPad(){
+            return navigator.platform.match(/iPad/i);
+        }
+
+        function getcurrentlangfromurl() {
+            $('html').attr('lang')
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            language = urlParams.get('language')
+            
+            if (language == null) {
+                return 'en'
+            } else {
+                return language
+            }
+        }
+
+        function getcurrentlangfromHTML_Tag() {
+            $('html').attr('lang')
+            language = $('html').attr('lang')
+            
+            if (language == null) {
+                return 'en'
+            } else {
+                return language
+            }
+        }
+
+        function alert(message, type, placeholder) {
+            var alertPlaceholder = document.getElementById(placeholder)
+            var wrapper = document.createElement('div')
+            wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+            alertPlaceholder.append(wrapper)
+
+            /*
+            setTimeout(function () {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    //$(this).remove(); 
+                });
+            }, 2000);
+            */
+        }
+
+        // SOCKET
+        const thisSessionId = Math.random().toString(36).substr(2, 9);
+        const socket = io('', { path: "/dialogtools/socket.io" })
+        socket.on("connect", () => {
+
+        });
+        socket.emit('connectInit', thisSessionId);
+        socket.on("uploadProgress", (data) => {
+            makeProgress(data)
+        })
+    </script>
+</html>
