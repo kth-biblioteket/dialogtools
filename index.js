@@ -710,6 +710,7 @@ const io = socketIo(server, {path: process.env.APP_PATH + "/socket.io"})
 
 const sockets = {}
 
+//Starta server
 io.on("connection", (socket) => {
     socket.on("connectInit", (sessionId) => {
         sockets[sessionId] = socket.id
